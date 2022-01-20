@@ -5,6 +5,11 @@
         position: absolute;
         opacity: 0;
     }
+    #imgPict{
+        height: 180px;
+        width: 180px;
+        background-color: #fff;
+    }
 </style>
 @section('content')
 @include('admin-views.admin.profile._headerProfile', [

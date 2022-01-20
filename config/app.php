@@ -228,5 +228,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facades::class,
         'Helper' => \App\CPU\Helpers::class,
+        'ImageManager' => \App\CPU\ImageManager::class,
     ],
 ];

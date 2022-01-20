@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\CPU\Helpers;
+use App\CPU\ImageManager;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Brian2694\Toastr\Facades\Toastr;
@@ -87,13 +88,15 @@ class UserController extends Controller
     public function adminPict(Request $request)
     {
         $img = $request->file('image');
-        dd($request->file('image'));
+        // dd($img);
         if (!isset($img)) {
             Toastr::error('Pilih avatar anda');
         }
 
+        $imageName = ImageManager::update('profile/', auth('admin')->user()->image, 'png', $img);
+
         Admin::where('id', auth('admin')->id())->update([
-            // 'image' =>
+            'image' => $imageName,
         ]);
     }
 }
