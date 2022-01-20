@@ -30,7 +30,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                 </div>
-                                <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                <input class="pl-2 form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                     placeholder="{{ __('Email') }}" type="email" name="email" value="{{ old('email') }}"
                                     id="signinSrEmail" required data-msg="Please enter a valid email address.">
                             </div>
@@ -47,7 +47,7 @@
                                     <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                 </div>
                                 <input id="signupSrPassword"
-                                    class="js-toggle-password form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                    class="pl-2 js-toggle-password form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                     name="password" placeholder="{{ __('Password') }}" type="password" value="secret" required
                                     data-hs-toggle-password-options='{
                                     "target": "#changePassTarget",

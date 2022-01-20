@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\customers\auth\LoginController;
+use App\Http\Controllers\customers\auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +18,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/customers/register', [RegisterController::class, 'index'])->name('customersReg');
+Route::post('/customers/register', [RegisterController::class, 'submit'])->name('customersReg_submit');
+Route::get('/customers/login', [LoginController::class, 'index'])->name('customersLogin');
+Route::post('/customers/login', [LoginController::class, 'submit'])->name('customersLogin_submit');
+Route::get('/customers/logout', [LoginController::class, 'logout'])->name('customersLogout');
+
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');

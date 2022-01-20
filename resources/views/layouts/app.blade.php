@@ -23,6 +23,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Argon CSS -->
     <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
 </head>
 
 <body class="{{ $class ?? '' }}">
@@ -49,6 +52,23 @@
     <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="{{asset('assets/back-end')}}/js/vendor.min.js"></script>
+    <script src="{{asset('assets/back-end')}}/js/theme.min.js"></script>
+    <script src="{{asset('assets/back-end')}}/js/sweet_alert.js"></script>
+    <script src="{{asset('assets/back-end')}}/js/toastr.js"></script>
+    {!! Toastr::message() !!}
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+    @if ($errors->any())
+    <script>
+        @foreach($errors->all() as $error)
+        toastr.error('{{$error}}', Error, {
+            CloseButton: true,
+            ProgressBar: true
+        });
+        @endforeach
+        </script>
+    @endif
     @stack('js')
 
     <!-- Argon JS -->

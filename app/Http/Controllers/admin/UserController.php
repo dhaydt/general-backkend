@@ -71,7 +71,7 @@ class UserController extends Controller
         }
 
         $data = [
-            'password' => strlen($request->password) > 8 ? bcrypt($request->password) : auth('admin')->user()->password,
+            'password' => bcrypt($request->password),
         ];
         if (auth('admin')->check()) {
             Admin::where(['id' => auth('admin')->id()])->update($data);
