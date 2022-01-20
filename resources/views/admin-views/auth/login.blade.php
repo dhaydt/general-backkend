@@ -22,7 +22,7 @@
                             Admin Area
                         </small>
                     </div>
-                    <form class="js-validate" role="form" method="POST" action="{{route('admin.auth.adminLogin')}}"">
+                    <form class="js-validate" role="form" method="POST" action="{{route('admin.auth.adminLogin')}}">
                         @csrf
 
                         <div class="js-form-message form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">

@@ -8,4 +8,5 @@ use Illuminate\Notifications\Notifiable;
 class Admin extends Authenticatable
 {
     use Notifiable;
+    protected $fillable = ['name', 'phone', 'email', 'password'];
 }

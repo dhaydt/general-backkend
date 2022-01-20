@@ -1,7 +1,7 @@
 @extends('layouts.backend.app')
 @section('title', 'Admin List')
 @section('content')
-@include('admin-views.partials._headerPage')
+@include('admin-views.admin._headerPage')
 <style>
     .card-footer {
         /* background-color: grey; */

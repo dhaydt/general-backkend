@@ -23,38 +23,37 @@
 
                                 <div class="modal-body p-0">
                                     <div class="card bg-secondary border-0 mb-0">
-                                        <div class="card-header bg-transparent pb-5">
-                                            <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small>
-                                            </div>
-
-
-                                            <div class="btn-wrapper text-center">
-                                                <a href="#" class="btn btn-neutral btn-icon">
-                                                    <span class="btn-inner--icon"><img
-                                                            src="../../assets/img/icons/common/github.svg"></span>
-                                                    <span class="btn-inner--text">Github</span>
-                                                </a>
-                                                <a href="#" class="btn btn-neutral btn-icon">
-                                                    <span class="btn-inner--icon"><img
-                                                            src="../../assets/img/icons/common/google.svg"></span>
-                                                    <span class="btn-inner--text">Google</span>
-                                                </a>
-                                            </div>
-
-
-                                        </div>
                                         <div class="card-body px-lg-5 py-lg-5">
                                             <div class="text-center text-muted mb-4">
-                                                <small>Or sign in with credentials</small>
+                                                <small>Add Admin</small>
                                             </div>
-                                            <form role="form">
+                                            <form class="js-validate" role="form" method="POST" action="{{route('admin.userAdminAdd')}}">
+                                                @csrf
+                                                <div class="form-group mb-3">
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="ni ni-single-02"></i></span>
+                                                        </div>
+                                                        <input class="pl-2 form-control" name="name" placeholder="Name" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="ni ni-mobile-button"></i></span>
+                                                        </div>
+                                                        <input class="pl-2 form-control" name="phone" placeholder="Phone" type="number">
+                                                    </div>
+                                                </div>
                                                 <div class="form-group mb-3">
                                                     <div class="input-group input-group-merge input-group-alternative">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i
                                                                     class="ni ni-email-83"></i></span>
                                                         </div>
-                                                        <input class="form-control" placeholder="Email" type="email">
+                                                        <input class="pl-2 form-control" name="email" placeholder="Email" type="email">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -63,19 +62,22 @@
                                                             <span class="input-group-text"><i
                                                                     class="ni ni-lock-circle-open"></i></span>
                                                         </div>
-                                                        <input class="form-control" placeholder="Password"
+                                                        <input class="pl-2 form-control" name="password" placeholder="Password"
                                                             type="password">
                                                     </div>
                                                 </div>
-                                                <div class="custom-control custom-control-alternative custom-checkbox">
-                                                    <input class="custom-control-input" id=" customCheckLogin"
-                                                        type="checkbox">
-                                                    <label class="custom-control-label" for=" customCheckLogin">
-                                                        <span class="text-muted">Remember me</span>
-                                                    </label>
+                                                <div class="form-group">
+                                                    <div class="input-group input-group-merge input-group-alternative">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="ni ni-lock-circle-open"></i></span>
+                                                        </div>
+                                                        <input class="pl-2 form-control" name="c_password" placeholder="Confirm Password"
+                                                            type="password">
+                                                    </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button type="button" class="btn btn-primary my-4">Sign in</button>
+                                                    <button type="submit" class="btn btn-primary my-4">Add Admin</button>
                                                 </div>
                                             </form>
                                         </div>
