@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\CPU\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class UserController extends Controller
         }
 
         session()->put('title', 'Admin list');
+        $admin = $admin->last()->paginate(Helpers::pagination_limit())->appends($query_param);
 
-        return view('admin-views.admin.list', compact('admin'));
+        return view('admin-views.admin.list', compact('admin', 'search'));
     }
 }

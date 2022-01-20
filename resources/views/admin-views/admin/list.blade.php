@@ -1,8 +1,30 @@
 @extends('layouts.backend.app')
-
+@section('title', 'Admin List')
 @section('content')
 @include('admin-views.partials._headerPage')
+<style>
+    .card-footer {
+        /* background-color: grey; */
+    }
+    .card-footer .row.justify-content-center .col-sm-auto .d-flex nav .flex {
+        display: none;
+    }
+    .card-footer > div > div > div > nav > div.hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between > div:nth-child(1) > p {
+        display: none;
+    }
+    .card-footer > div > div > div > nav > div.hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between > div:nth-child(2) > span {
+        display: flex;
+    }
 
+    .card-footer > div > div > div > nav > div.hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between > div:nth-child(2) > span span:first-child span svg
+    {
+        margin-right: 15px;
+    }
+    .card-footer > div > div > div > nav > div.hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between > div:nth-child(2) > span > a:first-child svg{
+
+    }
+
+</style>
 <div class="container-fluid mt--8">
     <div class="row">
         <div class="col">
@@ -14,12 +36,13 @@
                 <!-- Light table -->
                 {{-- {{ var_dump($admin) }} --}}
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
+                    <table class="table align-items-center table-flush" >
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" class="sort" data-sort="name">ID</th>
                                 <th scope="col" class="sort" data-sort="budget">Name</th>
                                 <th scope="col" class="sort" data-sort="status">Email</th>
+                                <th scope="col" class="sort" data-sort="status">Phone</th>
                                 <th scope="col">Profile Image</th>
                                 <th scope="col" class="sort" data-sort="completion">Action</th>
                                 <th scope="col"></th>
@@ -43,27 +66,21 @@
                                 </td>
                                 <td>
                                     <span class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
+                                        {{-- <i class="bg-warning"></i> --}}
                                         <span class="status">{{ $ad['email'] }}</span>
                                     </span>
                                 </td>
                                 <td>
+                                    <span class="badge badge-dot mr-4">
+                                        {{-- <i class="bg-warning"></i> --}}
+                                        <span class="status">{{ $ad['phone'] }}</span>
+                                    </span>
+                                </td>
+                                <td>
                                     <div class="avatar-group">
-                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
+                                        <a href="javascript:" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
                                             data-original-title="Ryan Tompson">
-                                            <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
-                                        </a>
-                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                            data-original-title="Romina Hadid">
-                                            <img alt="Image placeholder" src="../assets/img/theme/team-2.jpg">
-                                        </a>
-                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                            data-original-title="Alexander Smith">
-                                            <img alt="Image placeholder" src="../assets/img/theme/team-3.jpg">
-                                        </a>
-                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                            data-original-title="Jessica Doe">
-                                            <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
+                                            <img alt="Image placeholder" src="{{ asset('storage/profile/'.$ad['image']) }}">
                                         </a>
                                     </div>
                                 </td>
@@ -86,8 +103,8 @@
                     </table>
                 </div>
                 <!-- Card footer -->
-                <div class="card-footer py-4">
-                    <nav aria-label="...">
+                <div class="card-footer">
+                    {{-- <nav aria-label="...">
                         <ul class="pagination justify-content-end mb-0">
                             <li class="page-item disabled">
                                 <a class="page-link" href="#" tabindex="-1">
@@ -109,7 +126,15 @@
                                 </a>
                             </li>
                         </ul>
-                    </nav>
+                    </nav> --}}
+                    <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                        <div class="col-sm-auto">
+                            <div class="d-flex justify-content-center justify-content-sm-end">
+                                <!-- Pagination -->
+                                {!! $admin->links() !!}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
