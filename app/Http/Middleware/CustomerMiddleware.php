@@ -20,8 +20,6 @@ class CustomerMiddleware
     {
         if (Auth::guard('customer')->check()) {
             return $next($request);
-        } elseif (Auth::guard('customer')->check()) {
-            auth()->guard('customer')->logout();
         }
         Toastr::info('Silahkan login dahulu.');
 

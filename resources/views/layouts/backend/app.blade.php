@@ -10,6 +10,8 @@
 
     <title>@yield('title')</title>
     <!-- Favicon -->
+    <script src="https://code.jquery.com/jquery-3.5.0.js"
+        integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -52,7 +54,7 @@
     {{-- @include('layouts.backend.partials._footer') --}}
     @endif
     @endguest
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -77,7 +79,78 @@
     </script>
     @endif
     @stack('js')
+    <script>
+        $(document).on('ready', function () {
+        $('.js-select2-custom').each(function () {
+            var select2 = $.HSCore.components.HSSelect2.init($(this));
+        });
 
+        // INITIALIZATION OF UNFOLD
+        // =======================================================
+        $('.js-hs-unfold-invoker').each(function () {
+            var unfold = new HSUnfold($(this)).init();
+        });
+
+
+        // INITIALIZATION OF FORM SEARCH
+        // =======================================================
+        $('.js-form-search').each(function () {
+            new HSFormSearch($(this)).init()
+        });
+
+
+        // INITIALIZATION OF SELECT2
+        // =======================================================
+        $('.js-select2-custom').each(function () {
+            var select2 = $.HSCore.components.HSSelect2.init($(this));
+        });
+
+
+        // INITIALIZATION OF DATERANGEPICKER
+        // =======================================================
+        $('.js-daterangepicker').daterangepicker();
+
+        $('.js-daterangepicker-times').daterangepicker({
+            timePicker: true,
+            startDate: moment().startOf('hour'),
+            endDate: moment().startOf('hour').add(32, 'hour'),
+            locale: {
+                format: 'M/DD hh:mm A'
+            }
+        });
+
+        var start = moment();
+        var end = moment();
+
+        function cb(start, end) {
+            $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
+        }
+
+        $('#js-daterangepicker-predefined').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end);
+
+
+        // INITIALIZATION OF CLIPBOARD
+        // =======================================================
+        $('.js-clipboard').each(function () {
+            var clipboard = $.HSCore.components.HSClipboard.init(this);
+        });
+    });
+
+    </script>
+    @stack('script')
     <!-- Argon JS -->
     <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
 </body>

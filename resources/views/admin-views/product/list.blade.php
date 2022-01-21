@@ -45,15 +45,16 @@
                         <thead class="thead-light">
                             <tr class="text-center">
                                 <th scope="col" class="sort" data-sort="name">ID</th>
-                                <th scope="col" class="sort" data-sort="budget">Name</th>
-                                <th scope="col" class="sort" data-sort="status">Email</th>
-                                <th scope="col" class="sort" data-sort="status">Phone</th>
-                                <th scope="col">Profile Image</th>
+                                <th scope="col" class="sort" data-sort="budget">Product name</th>
+                                <th scope="col" class="sort" data-sort="status">Purchase Price</th>
+                                <th scope="col" class="sort" data-sort="status">Selling Price</th>
+                                <th scope="col">Product</th>
                                 <th scope="col" class="sort" data-sort="completion">Action</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody class="list">
+                            {{-- {{ dd($admin) }} --}}
                             @foreach ($admin as $ad)
                             <tr>
                                 <th scope="row">
@@ -72,13 +73,13 @@
                                 <td class="text-center">
                                     <span class="badge badge-dot mr-4">
                                         {{-- <i class="bg-warning"></i> --}}
-                                        <span class="status">{{ $ad['email'] }}</span>
+                                        <span class="status">{{ $ad['purchase_price'] }}</span>
                                     </span>
                                 </td>
                                 <td class="text-center">
                                     <span class="badge badge-dot mr-4">
                                         {{-- <i class="bg-warning"></i> --}}
-                                        <span class="status">{{ $ad['phone'] }}</span>
+                                        <span class="status">{{ $ad['unit_price'] }}</span>
                                     </span>
                                 </td>
                                 <td class="text-center">
@@ -86,7 +87,7 @@
                                         <a href="javascript:" class="avatar avatar-sm rounded-circle"
                                             data-toggle="tooltip" data-original-title="Ryan Tompson">
                                             <img alt="Image placeholder"
-                                                src="{{ asset('storage/profile/'.$ad['image']) }}">
+                                                src="{{ asset('storage/product/'.$ad['images']) }}">
                                         </a>
                                     </div>
                                 </td>
@@ -129,15 +130,15 @@
                             </li>
                         </ul>
                     </nav> --}}
-                    <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                    <div class="row justify-content-center justify-content-sm-between justify-content-md-center align-items-sm-center">
                         <div class="col-sm-auto">
                             <div class="d-flex justify-content-center justify-content-sm-end">
                                 <!-- Pagination -->
                                 @if(count($admin)==0)
                                 <div class="text-center p-4">
-                                    {{-- <img class="mb-3" src="{{asset('public/assets/back-end')}}/svg/illustrations/sorry.svg"
-                                    alt="Image Description" style="width: 7rem;"> --}}
-                                    <p class="mb-0">'No data to show'</p>
+                                    <img class="mb-3" src="{{asset('assets/img')}}/sorry.svg"
+                                    alt="Image Description" style="width: 7rem;">
+                                    <p class="mb-0">No data to show</p>
                                 </div>
                                 @else
                                 {!! $admin->links() !!}
