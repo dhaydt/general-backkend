@@ -28,22 +28,23 @@ class LoginController extends Controller
         ]);
 
         $remember = ($request['remember']) ? true : false;
-        $user = Customer::where('email', 'like', "%{$request->email}%")->first();
+        $user = Customer::where('email', $request->email)->first();
 
         if (isset($user) == false) {
             Toastr::error('Email belum terdaftar');
 
             return back()->withInput();
         }
-        if (isset($user) && auth('customer')->attempt(['email' => $user->email, 'password' => $request->password], $remember)) {
-            Toastr::info('Welcome to '.env('APP_NAME', 'Backend').' !');
-            // CartManager::cart_to_db();
+        // dd($user, bcrypt($request->password));
+
+        if (isset($user) && $user->is_active && auth('customer')->attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
+            Toastr::info('Welcome  '.$user->name.'to '.env('APP_NAME', 'Backend').' !');
 
             return view('welcome');
         }
         // dd($user);
 
-        Toastr::error('User belum terdaftar');
+        Toastr::error('Password atau email salah');
 
         return back()->withInput();
     }

@@ -30,6 +30,12 @@ class RegisterController extends Controller
         //     return redirect(route('customer.auth.check', [$user->id]));
         // }
 
+        if (isset($user)) {
+            Toastr::warning('Email atau nomor telepon sudah terdaftar');
+
+            return redirect()->back();
+        }
+
         // dd($request);
 
         $request->validate([
