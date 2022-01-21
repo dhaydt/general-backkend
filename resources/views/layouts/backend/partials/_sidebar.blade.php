@@ -96,7 +96,7 @@
             </ul>
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('icons') }}">
+                    <a class="nav-link" href="{{ route('admin.listProduct') }}">
                         <i class="fas fa-cookie-bite text-blue"></i>{{ __('Product') }}
                     </a>
                 </li>
