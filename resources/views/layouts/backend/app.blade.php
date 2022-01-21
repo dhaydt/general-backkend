@@ -26,17 +26,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
     <style>
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 48px;
-            height: 23px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
+        .breadcrumb-item {
+            text-transform: capitalize;
         }
     </style>
 </head>
@@ -83,7 +74,7 @@
             ProgressBar: true
         });
         @endforeach
-        </script>
+    </script>
     @endif
     @stack('js')
 

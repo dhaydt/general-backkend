@@ -8,15 +8,15 @@
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="javascript:">User Section</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">User Admin</li>
+                            <li class="breadcrumb-item active" aria-current="page">Customers</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal"
-                        data-target="#modal-form">Add Admin</button>
-                    {{-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> --}}
-                    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+                    {{-- <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal"
+                        data-target="#modal-form">Add Admin</button> --}}
+                    <a href="javascript:" class="btn btn-sm btn-neutral">Filters</a>
+                    {{-- <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form"
                         aria-hidden="true">
                         <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content">
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

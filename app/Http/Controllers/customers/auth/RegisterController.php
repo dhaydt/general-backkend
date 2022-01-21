@@ -43,6 +43,7 @@ class RegisterController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'phone' => $numb,
+            'image' => 'profile.png',
             'is_active' => 1,
             'password' => bcrypt($request['password']),
         ]);

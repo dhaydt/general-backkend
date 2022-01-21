@@ -127,7 +127,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('icons') }}">
+                    <a class="nav-link" href="{{ route('admin.userCustomer') }}">
                         <i class="ni ni-circle-08 text-blue"></i> {{ __('Customers') }}
                     </a>
                 </li>

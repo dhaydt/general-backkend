@@ -6,6 +6,7 @@ use App\CPU\Helpers;
 use App\CPU\ImageManager;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Customer;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
@@ -98,5 +99,37 @@ class UserController extends Controller
         Admin::where('id', auth('admin')->id())->update([
             'image' => $imageName,
         ]);
+    }
+
+    public function customerList(Request $request)
+    {
+        $query_param = [];
+        $search = $request['search'];
+        if ($request->has('search')) {
+            $key = explode(' ', $request['search']);
+            $admin = Customer::where(function ($q) use ($key) {
+                foreach ($key as $value) {
+                    $q->orWhere('name', 'like', "%{$value}%")
+                            ->orWhere('phone', 'like', "%{$value}%")
+                            ->orWhere('email', 'like', "%{$value}%");
+                }
+            });
+            $query_param = ['search' => $request['search']];
+        } else {
+            $admin = Customer::get();
+        }
+
+        session()->put('title', 'Customer list');
+        $admin = $admin->last()->paginate(Helpers::pagination_limit())->appends($query_param);
+
+        return view('admin-views.customer.list', compact('admin', 'search'));
+    }
+
+    public function customerView($id)
+    {
+        // dd($id);
+        $user = Customer::where('id', $id)->first();
+
+        return view('admin-views.customer.view.view', compact('user'));
     }
 }
