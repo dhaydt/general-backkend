@@ -262,7 +262,7 @@
 
         <div class="card mt-2 mb-2 rest-part">
             <div class="card-header">
-                <h4>{{('seo_section')}}</h4>
+                <h4>SEO Section</h4>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -555,19 +555,19 @@
             $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
         }
 
-        setTimeout(function () {
-            $('.call-update-sku').on('change', function () {
-                update_sku();
-            });
-        }, 2000)
+        // setTimeout(function () {
+        //     $('.call-update-sku').on('change', function () {
+        //         update_sku();
+        //     });
+        // }, 2000)
 
-        $('#colors-selector').on('change', function () {
-            update_sku();
-        });
+        // $('#colors-selector').on('change', function () {
+        //     update_sku();
+        // });
 
-        $('input[name="unit_price"]').on('keyup', function () {
-            update_sku();
-        });
+        // $('input[name="unit_price"]').on('keyup', function () {
+        //     update_sku();
+        // });
 
         function update_sku() {
             $.ajaxSetup({

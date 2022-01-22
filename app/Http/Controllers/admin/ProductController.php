@@ -239,7 +239,7 @@ class ProductController extends Controller
 
             Toastr::success('Product added successfully!');
 
-            return redirect()->route('admin.listProduct', ['in_house']);
+            return redirect()->route('admin.listProduct');
         }
 
         // return  'product store';

@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\auth\AdminController;
 use App\Http\Controllers\admin\auth\LoginAdminController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('user_customer', [UserController::class, 'customerList'])->name('userCustomer');
         Route::get('user_customer/{id}', [UserController::class, 'customerView'])->name('userCustomerView');
 
+        // Product
         Route::get('product_list', [ProductController::class, 'index'])->name('listProduct');
         Route::get('product_view/{id}', [ProductController::class, 'view'])->name('viewProduct');
         Route::get('product_add', [ProductController::class, 'add_new'])->name('addProduct');
@@ -41,5 +43,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('product_update/{id}', [ProductController::class, 'update'])->name('updateProduct');
         Route::post('status_update', [ProductController::class, 'status_update'])->name('statusUpdateProduct');
         Route::get('product_delete/{id}', [ProductController::class, 'delete'])->name('delProduct');
+
+        // Service
+        Route::get('service_list', [ServiceController::class, 'index'])->name('listService');
+        Route::get('service_add', [ServiceController::class, 'add'])->name('addService');
+        Route::post('service_store', [ServiceController::class, 'store'])->name('storeService');
+        Route::get('service_edit/{id}', [ServiceController::class, 'edit'])->name('editService');
+        Route::post('service_update/{id}', [ServiceController::class, 'update'])->name('updateService');
+        Route::post('service_update_status', [ServiceController::class, 'updateStatus'])->name('updateServiceStatus');
+        Route::get('service_delete/{id}', [ServiceController::class, 'delete'])->name('deleteService');
     });
 });

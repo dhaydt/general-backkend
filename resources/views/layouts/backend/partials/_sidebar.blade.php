@@ -101,7 +101,7 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('map') }}">
+                    <a class="nav-link" href="{{ route('admin.listService') }}">
                         <i class="fab fa-servicestack text-orange"></i>{{ __('Services') }}
                     </a>
                 </li>
