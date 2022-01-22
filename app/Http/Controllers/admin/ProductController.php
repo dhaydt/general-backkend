@@ -175,15 +175,15 @@ class ProductController extends Controller
         $stock_count = (int) $request['current_stock'];
         // }
 
-        // if ($validator->errors()->count() > 0) {
-        //     return response()->json(['errors' => Helpers::error_processor($validator)]);
-        // }
+        if ($validator->errors()->count() > 0) {
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
 
         if ($request->file('images')) {
             foreach ($request->file('images') as $img) {
                 $product_images[] = ImageManager::upload('product/', 'png', $img);
             }
-            $p->images = $product_images[0];
+            $p->images = json_encode($product_images);
         }
         $p->thumbnail = ImageManager::upload('product/thumbnail/', 'png', $request->image);
 
@@ -245,18 +245,243 @@ class ProductController extends Controller
         // return  'product store';
     }
 
-    public function edit($id)
+    public function view($id)
     {
-        return  $id;
+        return $id;
     }
 
-    public function update($id)
+    public function edit($id)
     {
-        return  $id;
+        $product = Product::find($id);
+
+        return  view('admin-views.product.edit', compact('product'));
+    }
+
+    public function status_update(Request $request)
+    {
+        $product = Product::where(['id' => $request['id']])->first();
+        $success = 1;
+        if ($request['status'] == 1) {
+            if ($product->added_by == 'seller' && $product->request_status == 0) {
+                $success = 0;
+            } else {
+                $product->status = $request['status'];
+            }
+        } else {
+            $product->status = $request['status'];
+        }
+        $product->save();
+
+        return response()->json([
+            'success' => $success,
+        ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            // 'category_id' => 'required',
+            // 'brand_id' => 'required',
+            // 'unit' => 'required',
+            'tax' => 'required|min:0',
+            'unit_price' => 'required|numeric|min:1',
+            'purchase_price' => 'required|numeric|min:1',
+        ], [
+            'name.required' => 'Product name is required!',
+            // 'category_id.required' => 'category  is required!',
+            // 'brand_id.required' => 'brand  is required!',
+            // 'unit.required' => 'Unit  is required!',
+        ]);
+
+        if ($request['discount_type'] == 'percent') {
+            $dis = ($request['unit_price'] / 100) * $request['discount'];
+        } else {
+            $dis = $request['discount'];
+        }
+
+        if ($request['unit_price'] <= $dis) {
+            $validator->after(function ($validator) {
+                $validator->errors()->add('unit_price', 'Discount can not be more or equal to the price!');
+            });
+        }
+
+        $product = Product::find($id);
+        $product->name = $request->name[array_search('en', $request->lang)];
+
+        // $category = [];
+        // if ($request->category_id != null) {
+        //     array_push($category, [
+        //         'id' => $request->category_id,
+        //         'position' => 1,
+        //     ]);
+        // }
+        // if ($request->sub_category_id != null) {
+        //     array_push($category, [
+        //         'id' => $request->sub_category_id,
+        //         'position' => 2,
+        //     ]);
+        // }
+        // if ($request->sub_sub_category_id != null) {
+        //     array_push($category, [
+        //         'id' => $request->sub_sub_category_id,
+        //         'position' => 3,
+        //     ]);
+        // }
+        // $product->category_ids = json_encode($category);
+        // $product->brand_id = $request->brand_id;
+        // $product->unit = $request->unit;
+        $product->details = $request->description[array_search('en', $request->lang)];
+        $product_images = json_decode($product->images);
+
+        // if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+        //     $product->colors = json_encode($request->colors);
+        // } else {
+        //     $colors = [];
+        //     $product->colors = json_encode($colors);
+        // }
+        // $choice_options = [];
+        // if ($request->has('choice')) {
+        //     foreach ($request->choice_no as $key => $no) {
+        //         $str = 'choice_options_'.$no;
+        //         $item['name'] = 'choice_'.$no;
+        //         $item['title'] = $request->choice[$key];
+        //         $item['options'] = explode(',', implode('|', $request[$str]));
+        //         array_push($choice_options, $item);
+        //     }
+        // }
+        // $product->choice_options = json_encode($choice_options);
+        // $variations = [];
+        //combinations start
+        // $options = [];
+        // if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+        //     $colors_active = 1;
+        //     array_push($options, $request->colors);
+        // }
+        // if ($request->has('choice_no')) {
+        //     foreach ($request->choice_no as $key => $no) {
+        //         $name = 'choice_options_'.$no;
+        //         $my_str = implode('|', $request[$name]);
+        //         array_push($options, explode(',', $my_str));
+        //     }
+        // }
+        // //Generates the combinations of customer choice options
+        // $combinations = Helpers::combinations($options);
+        // $variations = [];
+        // $stock_count = 0;
+        // if (count($combinations[0]) > 0) {
+        //     foreach ($combinations as $key => $combination) {
+        //         $str = '';
+        //         foreach ($combination as $k => $item) {
+        //             if ($k > 0) {
+        //                 $str .= '-'.str_replace(' ', '', $item);
+        //             } else {
+        //                 if ($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0) {
+        //                     $color_name = Color::where('code', $item)->first()->name;
+        //                     $str .= $color_name;
+        //                 } else {
+        //                     $str .= str_replace(' ', '', $item);
+        //                 }
+        //             }
+        //         }
+        //         $item = [];
+        //         $item['type'] = $str;
+        //         $item['price'] = BackEndHelper::currency_to_usd(abs($request['price_'.str_replace('.', '_', $str)]));
+        //         $item['sku'] = $request['sku_'.str_replace('.', '_', $str)];
+        //         $item['qty'] = abs($request['qty_'.str_replace('.', '_', $str)]);
+        //         array_push($variations, $item);
+
+        //         $stock_count += $item['qty'];
+        //     }
+        // } else {
+        $stock_count = (int) $request['current_stock'];
+        // }
+
+        if ($validator->errors()->count() > 0) {
+            return response()->json(['errors' => Helpers::error_processor($validator)]);
+        }
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                ->withInput();
+        }
+
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $img) {
+                $product_images[] = ImageManager::upload('product/', 'png', $img);
+            }
+            $product->images = json_encode($product_images);
+        }
+
+        if ($request->file('image')) {
+            $product->thumbnail = ImageManager::update('product/thumbnail/', $product->thumbnail, 'png', $request->file('image'));
+        }
+        //combinations end
+        // $product->variation = json_encode($variations);
+        $product->unit_price = $request->unit_price;
+        $product->purchase_price = $request->purchase_price;
+        $product->tax = $request->tax == 'flat' ? $request->tax : $request->tax;
+        $product->tax_type = $request->tax_type;
+        $product->discount = $request->discount_type == 'flat' ? $request->discount : $request->discount;
+        // $product->attributes = json_encode($request->choice_attributes);
+        $product->discount_type = $request->discount_type;
+        // $product->label = $request->label;
+        $product->current_stock = $request->current_stock;
+
+        $product->meta_title = $request->meta_title;
+        $product->meta_description = $request->meta_description;
+        if ($request->file('meta_image')) {
+            $product->meta_image = ImageManager::update('product/meta/', $product->meta_image, 'png', $request->file('meta_image'));
+        }
+        // $product->video_provider = 'youtube';
+        // $product->video_url = $request->video_link;
+        // if ($product->added_by == 'seller' && $product->request_status == 2) {
+        //     $product->request_status = 1;
+        // }
+
+        if ($request->ajax()) {
+            return response()->json([], 200);
+        } else {
+            $product->save();
+            // foreach ($request->lang as $index => $key) {
+            //     if ($request->name[$index] && $key != 'en') {
+            //         Translation::updateOrInsert(
+            //             ['translationable_type' => 'App\Model\Product',
+            //                 'translationable_id' => $product->id,
+            //                 'locale' => $key,
+            //                 'key' => 'name', ],
+            //             ['value' => $request->name[$index]]
+            //         );
+            //     }
+            //     if ($request->description[$index] && $key != 'en') {
+            //         Translation::updateOrInsert(
+            //             ['translationable_type' => 'App\Model\Product',
+            //                 'translationable_id' => $product->id,
+            //                 'locale' => $key,
+            //                 'key' => 'description', ],
+            //             ['value' => $request->description[$index]]
+            //         );
+            //     }
+            // }
+            Toastr::success('Product updated successfully.');
+
+            return back();
+        }
     }
 
     public function delete($id)
     {
-        return  $id;
+        $product = Product::find($id);
+        foreach (json_decode($product['images'], true) as $image) {
+            ImageManager::delete('/product/'.$image);
+        }
+        ImageManager::delete('/product/thumbnail/'.$product['thumbnail']);
+        $product->delete();
+        // FlashDealProduct::where(['product_id' => $id])->delete();
+        // DealOfTheDay::where(['product_id' => $id])->delete();
+        Toastr::success('Product removed successfully!');
+
+        return back();
     }
 }

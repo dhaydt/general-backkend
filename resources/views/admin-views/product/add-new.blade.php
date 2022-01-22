@@ -7,7 +7,6 @@
     <link href="{{ asset('assets/select2/css/select2.min.css')}}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
-
 @section('content')
 @include('admin-views.product.partials._headerAddNew')
     <div class="content container-fluid">
@@ -502,27 +501,27 @@
             update_sku();
         });
 
-        function update_sku() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+        // function update_sku() {
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
 
-            $.ajax({
-                type: "POST",
-                url: '{{route('admin.sku-combination')}}',
-                data: $('#product_form').serialize(),
-                success: function (data) {
-                    $('#sku_combination').html(data.view);
-                    if (data.length > 1) {
-                        $('#quantity').hide();
-                    } else {
-                        $('#quantity').show();
-                    }
-                }
-            });
-        }
+        //     $.ajax({
+        //         type: "POST",
+        //         url: '{{route('admin.sku-combination')}}',
+        //         data: $('#product_form').serialize(),
+        //         success: function (data) {
+        //             $('#sku_combination').html(data.view);
+        //             if (data.length > 1) {
+        //                 $('#quantity').hide();
+        //             } else {
+        //                 $('#quantity').show();
+        //             }
+        //         }
+        //     });
+        // }
 
         $(document).ready(function () {
             // color select select2

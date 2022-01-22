@@ -33,11 +33,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('user_customer/{id}', [UserController::class, 'customerView'])->name('userCustomerView');
 
         Route::get('product_list', [ProductController::class, 'index'])->name('listProduct');
+        Route::get('product_view/{id}', [ProductController::class, 'view'])->name('viewProduct');
         Route::get('product_add', [ProductController::class, 'add_new'])->name('addProduct');
         Route::post('product_store', [ProductController::class, 'store'])->name('storeProduct');
         Route::post('product_sku', [ProductController::class, 'skuCombination'])->name('sku-combination');
-        Route::get('product_edit', [ProductController::class, 'edit'])->name('editProduct');
-        Route::put('product_update', [ProductController::class, 'update'])->name('updateProduct');
-        Route::delete('product_delete', [ProductController::class, 'delete'])->name('delProduct');
+        Route::get('product_edit/{id}', [ProductController::class, 'edit'])->name('editProduct');
+        Route::post('product_update/{id}', [ProductController::class, 'update'])->name('updateProduct');
+        Route::post('status_update', [ProductController::class, 'status_update'])->name('statusUpdateProduct');
+        Route::get('product_delete/{id}', [ProductController::class, 'delete'])->name('delProduct');
     });
 });
