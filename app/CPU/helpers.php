@@ -44,6 +44,18 @@ class Helpers
         return $lang;
     }
 
+    public static function get_settings($object, $type)
+    {
+        $config = null;
+        foreach ($object as $setting) {
+            if ($setting['type'] == $type) {
+                $config = $setting;
+            }
+        }
+
+        return $config;
+    }
+
     public static function get_business_settings($name)
     {
         $config = null;

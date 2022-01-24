@@ -12,7 +12,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('storage/company/'.$web_config['web_logo']->value) }}" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -136,6 +136,22 @@
                         <i class="fas fa-users text-orange"></i> {{ __('User Admin') }}
                     </a>
                 </li>
+            </ul>
+
+            <!-- Order Section -->
+            <h6 class="navbar-heading text-muted">Config Section</h6>
+            <!-- Navigation -->
+            <ul class="navbar-nav mb-md-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.web-config.index') }}">
+                        <i class="fas fa-cogs text-blue"></i> {{ __('Web config') }}
+                    </a>
+                </li>
+                {{-- <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('map') }}">
+                        <i class="fas fa-sort-alpha-up-alt text-orange"></i> {{ __('Order Service') }}
+                    </a>
+                </li> --}}
             </ul>
             {{-- <ul class="navbar-nav">
                 <li class="nav-item">

@@ -10,7 +10,7 @@
 
     <title>@yield('title')</title>
     <!-- Favicon -->
-    <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
+    <link href="{{ asset('storage/company/'.$web_config['fav_icon']->value) }}" rel="icon" type="image/png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!-- Extra details for Live View on GitHub Pages -->
@@ -29,6 +29,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
     <style>
+        .main-content .header.bg-primary {
+            background-color: {{ $web_config['primary_color'] }} !important;
+        }
         .breadcrumb-item {
             text-transform: capitalize;
         }

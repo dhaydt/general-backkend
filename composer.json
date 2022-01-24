@@ -14,7 +14,9 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.4"
+        "laravel/ui": "^3.4",
+        "symfony/translation": "^5.4",
+        "symfony/translation-contracts": "^2.5"
     },
     "require-dev": {
         "amirami/localizator": "^0.7.1@alpha",

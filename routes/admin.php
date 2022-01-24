@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\admin\auth\AdminController;
 use App\Http\Controllers\admin\auth\LoginAdminController;
+use App\Http\Controllers\admin\BussinessSettingsController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ServiceController;
+use App\Http\Controllers\admin\SystemController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::get('/user_admin', [UserController::class, 'index'])->name('userAdmin');
         Route::post('/add_admin', [AdminController::class, 'index'])->name('userAdminAdd');
+
+        // System Route
+        Route::get('maintenance-mode', [SystemController::class, 'maintenance_mode'])->name('maintenance-mode');
 
         Route::get('/profile', [UserController::class, 'profile'])->name('adminProfile');
         Route::put('/update_adminInfo', [UserController::class, 'adminInfo'])->name('adminInfo');
@@ -52,5 +57,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('service_update/{id}', [ServiceController::class, 'update'])->name('updateService');
         Route::post('service_update_status', [ServiceController::class, 'updateStatus'])->name('updateServiceStatus');
         Route::get('service_delete/{id}', [ServiceController::class, 'delete'])->name('deleteService');
+
+        // Bussiness settings
+        Route::prefix('web-config')->name('web-config.')->group(function () {
+            Route::get('/', [BussinessSettingsController::class, 'companyInfo'])->name('index');
+            Route::post('/update-colors', [BussinessSettingsController::class, 'update_colors']);
+            Route::post('/update-company', [BussinessSettingsController::class, 'updateCompany'])->name('company-update');
+            Route::post('/update-company-email', [BussinessSettingsController::class, 'updateCompanyEmail'])->name('company-email-update');
+            Route::post('/update-company-phone', [BussinessSettingsController::class, 'updateCompanyPhone'])->name('company-phone-update');
+            Route::post('/update-web-logo', [BussinessSettingsController::class, 'uploadWebLogo'])->name('company-web-logo-update');
+            Route::post('/update-mobile-logo', [BussinessSettingsController::class, 'uploadMobileLogo'])->name('company-mobile-logo-update');
+            Route::post('/update-footer-logo', [BussinessSettingsController::class, 'uploadFooterLogo'])->name('company-footer-logo-update');
+            Route::post('/update-fav-icon', [BussinessSettingsController::class, 'uploadFavIcon'])->name('company-fav-icon');
+            Route::post('/update-info', [BussinessSettingsController::class, 'updateInfo'])->name('update-info');
+        });
     });
 });
