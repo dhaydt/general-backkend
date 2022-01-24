@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\customers\auth\LoginController;
 use App\Http\Controllers\customers\auth\RegisterController;
+use App\Http\Controllers\SharedController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,3 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('table-list', function () {return view('pages.tables'); })->name('table');
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+
+// Share Controller
+Route::post('image-upload', [SharedController::class, 'imageUpload'])->name('image-upload');
+Route::get('image-remove/{id}/{folder}', [SharedController::class, 'imageRemove'])->name('image-remove');

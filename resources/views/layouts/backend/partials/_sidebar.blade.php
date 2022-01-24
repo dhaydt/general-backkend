@@ -147,11 +147,11 @@
                         <i class="fas fa-cogs text-blue"></i> {{ __('Web config') }}
                     </a>
                 </li>
-                {{-- <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('map') }}">
-                        <i class="fas fa-sort-alpha-up-alt text-orange"></i> {{ __('Order Service') }}
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('admin.banner.list') }}">
+                        <i class="fas fa-images text-orange"></i> {{ __('Banner Config') }}
                     </a>
-                </li> --}}
+                </li>
             </ul>
             {{-- <ul class="navbar-nav">
                 <li class="nav-item">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\auth\AdminController;
 use App\Http\Controllers\admin\auth\LoginAdminController;
+use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\BussinessSettingsController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ProductController;
@@ -70,6 +71,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/update-footer-logo', [BussinessSettingsController::class, 'uploadFooterLogo'])->name('company-footer-logo-update');
             Route::post('/update-fav-icon', [BussinessSettingsController::class, 'uploadFavIcon'])->name('company-fav-icon');
             Route::post('/update-info', [BussinessSettingsController::class, 'updateInfo'])->name('update-info');
+        });
+
+        // Banner
+        Route::prefix('banner')->name('banner.')->group(function () {
+            Route::get('/list', [BannerController::class, 'list'])->name('list');
+            Route::post('/add-new', [BannerController::class, 'store'])->name('store');
+            Route::post('/delete', [BannerController::class, 'delete'])->name('delete');
+            Route::post('/status', [BannerController::class, 'status'])->name('status');
+            Route::post('/edit', [BannerController::class, 'edit'])->name('edit');
+            Route::post('/update', [BannerController::class, 'update'])->name('update');
         });
     });
 });
