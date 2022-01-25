@@ -152,6 +152,11 @@
                         <i class="fas fa-images text-orange"></i> {{ __('Banner Config') }}
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('admin.payment.index') }}">
+                        <i class="fas fa-money-bill text-blue"></i> {{ __('Payment Config') }}
+                    </a>
+                </li>
             </ul>
             {{-- <ul class="navbar-nav">
                 <li class="nav-item">

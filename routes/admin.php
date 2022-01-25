@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\auth\LoginAdminController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\BussinessSettingsController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\PaymentController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\admin\SystemController;
@@ -81,6 +82,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/status', [BannerController::class, 'status'])->name('status');
             Route::post('/edit', [BannerController::class, 'edit'])->name('edit');
             Route::post('/update', [BannerController::class, 'update'])->name('update');
+        });
+
+        // payment
+        Route::prefix('payment')->name('payment.')->group(function () {
+            Route::get('/', [PaymentController::class, 'index'])->name('index');
+            Route::post('/payment-status', [PaymentController::class, 'status'])->name('status');
         });
     });
 });

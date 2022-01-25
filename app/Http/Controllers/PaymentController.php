@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Xendit\Xendit;
 
@@ -9,7 +10,13 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        return view('pages.payment');
+        $ewallet = Payment::where('type', 'ewallet')->where('status', 1)->get();
+        $va = Payment::where('type', 'va')->where('status', 1)->get();
+        $retail = Payment::where('type', 'retail')->where('status', 1)->get();
+        $other = Payment::where('type', 'other')->where('status', 1)->get();
+        // dd($ewallet);
+
+        return view('web-views.payment', compact('ewallet', 'va', 'retail', 'other'));
     }
 
     public function createVa()

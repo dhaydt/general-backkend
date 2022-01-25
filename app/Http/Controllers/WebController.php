@@ -8,7 +8,7 @@ class WebController extends Controller
 {
     public function checkout_complete(Request $request)
     {
-        // session()->put('payment', $request['payment_method']);
+        session()->put('payment', $request['payment_method']);
 
         $data = [
             'name' => 'Transaksi berhasil',
