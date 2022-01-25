@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "symfony/translation": "^5.4",
-        "symfony/translation-contracts": "^2.5"
+        "symfony/translation-contracts": "^2.5",
+        "xendit/xendit-php": "^2.17"
     },
     "require-dev": {
         "amirami/localizator": "^0.7.1@alpha",

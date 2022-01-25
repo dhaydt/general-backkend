@@ -12,7 +12,7 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="{{ route('home') }}">
+                        <a href="{{ url('/') }}">
                             <img src="{{ asset('argon') }}/img/brand/blue.png">
                         </a>
                     </div>
@@ -36,6 +36,12 @@
                 </li>
 
                 @if (auth('customer')->id() != null)
+                <li class="nav-item">
+                    <a class="nav-link nav-link-icon" href="{{ route('payment.index') }}">
+                        <i class="fas fa-money-bill-wave-alt"></i>
+                        <span class="nav-link-inner--text">{{ __('Payment') }}</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('profile.edit') }}">
                         <i class="ni ni-single-02"></i>

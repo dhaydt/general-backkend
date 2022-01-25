@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\customers\auth\LoginController;
 use App\Http\Controllers\customers\auth\RegisterController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SharedController;
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -48,3 +50,23 @@ Route::group(['middleware' => 'auth'], function () {
 // Share Controller
 Route::post('image-upload', [SharedController::class, 'imageUpload'])->name('image-upload');
 Route::get('image-remove/{id}/{folder}', [SharedController::class, 'imageRemove'])->name('image-remove');
+
+// Payment
+Route::prefix('payment')->name('payment.')->group(function () {
+    Route::get('/', [PaymentController::class, 'index'])->name('index');
+    // Route::post('{name}', 'XenditPaymentController@update')->name('update');
+    Route::post('/va/create', [PaymentController::class, 'createVa'])->name('vaCreate');
+    Route::get('/va/list', [PaymentController::class, 'getListVa']);
+    Route::post('/va/invoice', [PaymentController::class, 'invoice'])->name('vaInvoice');
+    Route::get('/success/{type}', [PaymentController::class, 'success'])->name('xenditSuccess');
+    Route::get('/expired/{id}', [PaymentController::class, 'expire'])->name('xenditExpired');
+});
+
+// checkout
+Route::group(['middleware' => 'customer'], function () {
+    Route::get('/checkout-details', [WebController::class, 'checkout_details'])->name('checkout-details');
+    Route::get('/checkout-shipping', [WebController::class, 'checkout_shipping'])->name('checkout-shipping');
+    Route::get('/checkout-complete', [WebController::class, 'checkout_complete'])->name('checkout-complete');
+    Route::get('/checkout-payment', [WebController::class, 'checkout_payment'])->name('checkout-payment');
+    Route::get('/payment-success', [PaymentController::class, 'success'])->name('payment-success');
+});
