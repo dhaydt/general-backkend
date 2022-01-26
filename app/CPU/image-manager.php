@@ -16,7 +16,7 @@ class ImageManager
                 if (!Storage::disk()->exists($dirSto)) {
                     Storage::disk()->makeDirectory($dirSto);
                 }
-                Storage::disk()->put($dir.$imageName, file_get_contents($image));
+                Storage::disk()->put($dirSto.$imageName, file_get_contents($image));
             } else {
                 $imageName = 'def.png';
             }
