@@ -9,13 +9,14 @@ class ImageManager
 {
     public static function upload(string $dir, string $format, $image = null)
     {
+        $dirSto = '/public/'.$dir;
         if (env('APP_ENV') == 'live') {
             if ($image != null) {
                 $imageName = Carbon::now()->toDateString().'-'.uniqid().'.'.$format;
-                if (!Storage::disk()->exists($dir)) {
-                    Storage::disk()->makeDirectory($dir);
+                if (!Storage::disk()->exists($dirSto)) {
+                    Storage::disk()->makeDirectory($dirSto);
                 }
-                Storage::disk()->put($dir.$imageName, file_get_contents($image));
+                Storage::disk()->put($dirSto.$imageName, file_get_contents($image));
             } else {
                 $imageName = 'def.png';
             }
@@ -24,10 +25,10 @@ class ImageManager
         } else {
             if ($image != null) {
                 $imageName = Carbon::now()->toDateString().'-'.uniqid().'.'.$format;
-                if (!Storage::disk()->exists('/public/'.$dir)) {
-                    Storage::disk()->makeDirectory('/public/'.$dir);
+                if (!Storage::disk()->exists($dirSto)) {
+                    Storage::disk()->makeDirectory($dirSto);
                 }
-                Storage::disk()->put('/public/'.$dir.$imageName, file_get_contents($image));
+                Storage::disk()->put($dirSto.$imageName, file_get_contents($image));
             } else {
                 $imageName = 'def.png';
             }
@@ -38,11 +39,11 @@ class ImageManager
 
     public static function update(string $dir, $old_image, string $format, $image = null)
     {
-        // dd('/'.$dir.$old_image);
-        if (Storage::disk()->exists('/public/'.$dir.$old_image)) {
-            Storage::disk()->delete('/public/'.$dir.$old_image);
+        $dirSto = '/public/'.$dir;
+        if (Storage::disk()->exists($dirSto.$old_image)) {
+            Storage::disk()->delete($dirSto.$old_image);
         }
-        $imageName = ImageManager::upload($dir, $format, $image);
+        $imageName = ImageManager::upload($dirSto, $format, $image);
 
         return $imageName;
     }
