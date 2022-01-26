@@ -16,7 +16,7 @@ class ImageManager
                 if (!Storage::disk()->exists($dirSto)) {
                     Storage::disk()->makeDirectory($dirSto);
                 }
-                Storage::disk()->put($dirSto.$imageName, file_get_contents($image));
+                Storage::disk()->put($dir.$imageName, file_get_contents($image));
             } else {
                 $imageName = 'def.png';
             }
@@ -28,7 +28,7 @@ class ImageManager
                 if (!Storage::disk()->exists($dirSto)) {
                     Storage::disk()->makeDirectory($dirSto);
                 }
-                Storage::disk()->put($dirSto.$imageName, file_get_contents($image));
+                Storage::disk()->put($dir.$imageName, file_get_contents($image));
             } else {
                 $imageName = 'def.png';
             }
@@ -43,7 +43,7 @@ class ImageManager
         if (Storage::disk()->exists($dirSto.$old_image)) {
             Storage::disk()->delete($dirSto.$old_image);
         }
-        $imageName = ImageManager::upload($dirSto, $format, $image);
+        $imageName = ImageManager::upload($dir, $format, $image);
 
         return $imageName;
     }

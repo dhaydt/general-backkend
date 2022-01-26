@@ -1,4 +1,4 @@
-read -p "Change your .env first: " z
+# read -p "Change your .env first: " z
 
 git add .
 
