@@ -17,4 +17,9 @@ class WebController extends Controller
 
         return view('web-views.checkout-complete');
     }
+
+    public function shipping()
+    {
+        return view('web-views.shipping');
+    }
 }

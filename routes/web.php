@@ -70,3 +70,4 @@ Route::group(['middleware' => 'customer'], function () {
     Route::get('/checkout-payment', [WebController::class, 'checkout_payment'])->name('checkout-payment');
     Route::get('/payment-success', [PaymentController::class, 'success'])->name('payment-success');
 });
+Route::get('/shipping', [WebController::class, 'shipping'])->name('shipping');
