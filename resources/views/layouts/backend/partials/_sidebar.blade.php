@@ -122,6 +122,26 @@
                 </li>
             </ul>
 
+            <h6 class="navbar-heading text-muted">Marketing Section</h6>
+            <!-- Navigation -->
+            <ul class="navbar-nav mb-md-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.coupon.add-new') }}">
+                        <i class="fas fa-cogs text-blue"></i> {{ __('Coupon') }}
+                    </a>
+                </li>
+                {{-- <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('admin.banner.list') }}">
+                        <i class="fas fa-images text-orange"></i> {{ __('Banner Config') }}
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('admin.payment.index') }}">
+                        <i class="fas fa-money-bill text-blue"></i> {{ __('Payment Config') }}
+                    </a>
+                </li> --}}
+            </ul>
+
             <!-- User Section -->
             <h6 class="navbar-heading text-muted">User Section</h6>
             <!-- Navigation -->

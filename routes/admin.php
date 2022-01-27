@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\auth\AdminController;
 use App\Http\Controllers\admin\auth\LoginAdminController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\BussinessSettingsController;
+use App\Http\Controllers\admin\CouponController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\PaymentController;
 use App\Http\Controllers\admin\ProductController;
@@ -88,6 +89,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('payment')->name('payment.')->group(function () {
             Route::get('/', [PaymentController::class, 'index'])->name('index');
             Route::post('/payment-status', [PaymentController::class, 'status'])->name('status');
+        });
+
+        // Coupon
+        Route::prefix('coupon')->name('coupon.')->group(function () {
+            Route::get('add-new', [CouponController::class, 'add_new'])->name('add-new');
+            Route::post('add-new', [CouponController::class, 'store']);
+            Route::get('update/{id}', [CouponController::class, 'edit'])->name('update');
+            Route::post('update/{id}', [CouponController::class, 'update']);
+            Route::get('status/{id}/{status}', [CouponController::class, 'status'])->name('status');
         });
     });
 });

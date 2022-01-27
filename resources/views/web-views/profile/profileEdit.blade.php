@@ -105,7 +105,7 @@
                                         <div class="nav-profiile col-7">
                                             <button type="submit"
                                                 class="btn btn-primary float-{{Session::get('direction') === " rtl"
-                                                ? 'left' : 'right' }}">{{('update')}} {{('Informations')}}
+                                                ? 'left' : 'right' }}">{{('Update')}} {{('Informations')}}
                                             </button>
                                         </div>
                                     </div>
