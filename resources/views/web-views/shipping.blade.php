@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'bg-default'])
 <style>
-    .btn.btn-block{
-        text-transform: capitalize !important;
+    .card-header img{
+        height: 30px;
     }
 </style>
 @section('content')
@@ -10,25 +10,27 @@
         <div class="header-body text-center mt-7 mb-4">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-6">
-                    <h1 class="text-white">{{ __('Welcome to TigaTech Payment System') }}</h1>
+                    <h1 class="text-white">{{ __('Welcome to TigaTech Shipping Service') }}</h1>
                 </div>
             </div>
         </div>
         <div class="payment-type wallet card w-100">
-            <span class="card-header py-1">Shipment Options</span>
+            <span class="card-header py-1">Shipping Options</span>
             @php($shippings=\App\CPU\Helpers::get_shipping_methods())
             <div class="card-body pb-1 row">
                 @foreach ($shippings[0] as $ship)
                 {{-- {{ dd($ship[0]) }} --}}
-                <div class="col-md-6 mb-4 col-6" style="cursor: pointer">
+                <div class="col-md-6 mb-4 col-6 d-flex justify-content-center" style="cursor: pointer">
                     <div class="card">
-                        <div class="card-body" style="height: 150px">
-                            <button class="btn btn-primary btn-block mb-2">
-                                {{ $ship[0]['code'] }}
-                            </button>
+                        <div class="card-header">
+                            <img src="{{ asset('assets/front-end/img/'.$ship[0]['code'].'.png') }}" alt="">
+                        </div>
+                        <div class="card-body">
                             @foreach ($ship[0]['costs'] as $cost)
                             {{-- {{ dd($cost) }} --}}
-                                <li>Service : {{ $cost['service'] }} - Cost : {{ $cost['cost'][0]['value'] }} - Estimation : {{ $cost['cost'][0]['etd'] }}</li>
+                                <li>Service : {{ $cost['service'] }}</li>
+                                <span class="ml-4">Cost : {{ $cost['cost'][0]['value'] }}</span><br>
+                                <span class="ml-4">Estimation : {{ $cost['cost'][0]['etd'].' days' }}</span>
                             @endforeach
                         </div>
                     </div>
