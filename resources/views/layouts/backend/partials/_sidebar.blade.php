@@ -127,7 +127,7 @@
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.coupon.add-new') }}">
-                        <i class="fas fa-cogs text-blue"></i> {{ __('Coupon') }}
+                        <i class="fas fa-credit-card text-blue"></i> {{ __('Coupon') }}
                     </a>
                 </li>
                 {{-- <li class="nav-item ">
