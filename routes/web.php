@@ -4,6 +4,7 @@ use App\Http\Controllers\customers\auth\LoginController;
 use App\Http\Controllers\customers\auth\RegisterController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SharedController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -71,3 +72,9 @@ Route::group(['middleware' => 'customer'], function () {
     Route::get('/payment-success', [PaymentController::class, 'success'])->name('payment-success');
 });
 Route::get('/shipping', [WebController::class, 'shipping'])->name('shipping');
+
+// profile
+Route::prefix('profile')->name('profile.')->group(function () {
+    Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+    Route::post('/update', [UserController::class, 'update'])->name('user-update');
+});

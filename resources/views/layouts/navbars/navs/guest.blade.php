@@ -56,7 +56,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('customersLogout') }}">
-                        <i class="ni ni-single-02"></i>
+                        <i class="fas fa-sign-out-alt"></i>
                         <span class="nav-link-inner--text">{{ __('Logout') }}</span>
                     </a>
                 </li>
