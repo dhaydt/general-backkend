@@ -30,14 +30,17 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
     <style>
         .main-content .header.bg-primary {
-            background-color: {{ $web_config['primary_color'] }} !important;
+            background-color: {{$web_config['primary_color']}} !important;
         }
+
         .breadcrumb-item {
             text-transform: capitalize;
         }
-        table.table{
+
+        table.table {
             color: #5e72e4;
         }
+
         .switch {
             position: relative;
             display: inline-block;
@@ -49,8 +52,17 @@
             cursor: pointer;
         }
 
-        td span{
+        td span {
             color: grey;
+        }
+
+        .legend-indicator {
+            display: inline-block;
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: #bdc5d1;
+            border-radius: 50%;
+            margin-right: 0.4375rem;
         }
     </style>
 </head>
@@ -176,7 +188,9 @@
     @stack('script_2')
     <!-- Argon JS -->
     <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

@@ -67,6 +67,7 @@ return array(
     'App\\Models\\AppModelAdmin' => $baseDir . '/app/Models/AppModelAdmin.php',
     'App\\Models\\Banner' => $baseDir . '/app/Models/Banner.php',
     'App\\Models\\BusinessSetting' => $baseDir . '/app/Models/BusinessSetting.php',
+    'App\\Models\\Category' => $baseDir . '/app/Models/Category.php',
     'App\\Models\\Coupon' => $baseDir . '/app/Models/Coupon.php',
     'App\\Models\\Customer' => $baseDir . '/app/Models/Customer.php',
     'App\\Models\\Payment' => $baseDir . '/app/Models/Payment.php',

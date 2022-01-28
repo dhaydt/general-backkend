@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\auth\AdminController;
 use App\Http\Controllers\admin\auth\LoginAdminController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\BussinessSettingsController;
+use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\CouponController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\PaymentController;
@@ -98,6 +99,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('update/{id}', [CouponController::class, 'edit'])->name('update');
             Route::post('update/{id}', [CouponController::class, 'update']);
             Route::get('status/{id}/{status}', [CouponController::class, 'status'])->name('status');
+        });
+
+        // Category
+        Route::prefix('category')->name('category.')->group(function () {
+            Route::get('view', [CategoryController::class, 'index'])->name('view');
+            Route::get('fetch', [CategoryController::class, 'fetch'])->name('fetch');
+            Route::post('store', [CategoryController::class, 'store'])->name('store');
+            Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('edit');
+            Route::post('update/{id}', [CategoryController::class, 'update'])->name('update');
+            Route::post('delete', [CategoryController::class, 'delete'])->name('delete');
+            Route::get('status/{id}/{home_status}', [CategoryController::class, 'status'])->name('status');
         });
     });
 });
