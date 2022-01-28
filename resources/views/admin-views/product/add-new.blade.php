@@ -37,13 +37,28 @@
 
                         <div class="card-body">
                             {{-- @foreach(json_decode($language) as $lang) --}}
-                                <div class="{{'EN' != 'EN' ? 'd-none':''}} lang_form"
+                                <div class="row {{'EN' != 'EN' ? 'd-none':''}} lang_form"
                                      id="EN-form">
-                                    <div class="form-group">
+                                    <div class="form-group col-6">
                                         <label class="input-label" for="EN_name">{{'name'}}
                                             ({{strtoupper('EN')}})</label>
                                         <input type="text" {{'EN' == 'EN'? 'required':''}} name="name[]"
                                                id="EN_name" class="form-control" placeholder="New Product" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="name">{{'Category'}}</label>
+                                        <select
+                                            class="js-example-basic-multiple form-control"
+                                            name="category_id"
+                                            onchange="getRequest('{{url('/')}}/admin/product/get-categories?parent_id='+this.value,'sub-category-select','select')"
+                                            required>
+                                            <option value="{{old('category_id')}}" selected disabled>---Select---</option>
+                                            @foreach($cat as $c)
+                                                <option value="{{$c['id']}}" {{old('name')==$c['id']? 'selected': ''}}>
+                                                    {{$c['name']}}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <input type="hidden" name="lang[]" value="EN">
                                     <div class="form-group pt-4">

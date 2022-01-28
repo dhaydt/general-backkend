@@ -41,14 +41,26 @@
 
                     <div class="card-body">
 
-                            <div class="{{$lang != 'en'? 'd-none':''}} lang_form" id="{{$lang}}-form">
-                                <div class="form-group">
+                            <div class="row {{$lang != 'en'? 'd-none':''}} lang_form" id="{{$lang}}-form">
+                                <div class="form-group col-6">
                                     <label class="input-label" for="{{$lang}}_ame">{{('Name')}}
                                         ({{strtoupper($lang)}})</label>
                                     <input type="text" {{$lang == 'en'? 'required':''}} name="name[]"
                                            id="{{$lang}}_name"
                                            value="{{$translate[$lang]['name']??$product['name']}}"
                                            class="form-control" placeholder="{{('New Product')}}" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="name">{{('Category')}}</label>
+                                    <select class="js-example-basic-multiple js-states js-example-responsive form-control"
+                                        name="category_id" id="category_id"
+                                        onchange="getRequest('{{url('/')}}/admin/product/get-categories?parent_id='+this.value,'sub-category-select','select')">
+                                        <option value="0" selected disabled>---{{('Select')}}---</option>
+                                        @foreach($categories as $category)
+                                        <option value="{{$category['id']}}" {{ $category->id==$product_category[0]->id ?
+                                            'selected' : ''}} >{{$category['name']}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <input type="hidden" name="lang[]" value="{{$lang}}">
                                 <div class="form-group pt-4">

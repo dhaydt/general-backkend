@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\CPU\Helpers;
 use App\CPU\ImageManager;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -42,7 +43,9 @@ class ProductController extends Controller
 
     public function add_new()
     {
-        return view('admin-views.product.add-new');
+        $cat = Category::where(['parent_id' => 0])->get();
+
+        return view('admin-views.product.add-new', compact('cat'));
     }
 
     public function store(Request $request)
@@ -50,7 +53,7 @@ class ProductController extends Controller
         // dd($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            // 'category_id' => 'required',
+            'category_id' => 'required',
             // 'brand_id' => 'required',
             // 'unit' => 'required',
             'images' => 'required',
@@ -61,7 +64,7 @@ class ProductController extends Controller
         ], [
             'images.required' => 'Product images is required!',
             'image.required' => 'Product thumbnail is required!',
-            // 'category_id.required' => 'category  is required!',
+            'category_id.required' => 'category  is required!',
             // 'brand_id.required' => 'brand  is required!',
             // 'unit.required' => 'Unit  is required!',
         ]);
@@ -86,14 +89,14 @@ class ProductController extends Controller
         $p->name = $request->name[array_search('en', $request->lang)];
         $p->slug = Str::slug($request->name[array_search('en', $request->lang)], '-').'-'.Str::random(6);
 
-        // $category = [];
+        $category = [];
 
-        // if ($request->category_id != null) {
-        //     array_push($category, [
-        //         'id' => $request->category_id,
-        //         'position' => 1,
-        //     ]);
-        // }
+        if ($request->category_id != null) {
+            array_push($category, [
+                'id' => $request->category_id,
+                'position' => 1,
+            ]);
+        }
         // if ($request->sub_category_id != null) {
         //     array_push($category, [
         //         'id' => $request->sub_category_id,
@@ -107,7 +110,7 @@ class ProductController extends Controller
         //     ]);
         // }
 
-        // $p->category_ids = json_encode($category);
+        $p->category_ids = json_encode($category);
         // $p->brand_id = $request->brand_id;
         // $p->unit = $request->unit;
         $p->details = $request->description[array_search('en', $request->lang)];
@@ -253,8 +256,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
+        $categories = Category::where(['parent_id' => 0])->get();
+        $product_category = json_decode($product->category_ids);
 
-        return  view('admin-views.product.edit', compact('product'));
+        return  view('admin-views.product.edit', compact('product', 'categories', 'product_category'));
     }
 
     public function status_update(Request $request)
@@ -282,7 +287,7 @@ class ProductController extends Controller
         // dd($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            // 'category_id' => 'required',
+            'category_id' => 'required',
             // 'brand_id' => 'required',
             // 'unit' => 'required',
             'tax' => 'required|min:0',
@@ -290,7 +295,7 @@ class ProductController extends Controller
             'purchase_price' => 'required|numeric|min:1',
         ], [
             'name.required' => 'Product name is required!',
-            // 'category_id.required' => 'category  is required!',
+            'category_id.required' => 'category  is required!',
             // 'brand_id.required' => 'brand  is required!',
             // 'unit.required' => 'Unit  is required!',
         ]);
@@ -310,13 +315,13 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->name = $request->name[array_search('en', $request->lang)];
 
-        // $category = [];
-        // if ($request->category_id != null) {
-        //     array_push($category, [
-        //         'id' => $request->category_id,
-        //         'position' => 1,
-        //     ]);
-        // }
+        $category = [];
+        if ($request->category_id != null) {
+            array_push($category, [
+                'id' => $request->category_id,
+                'position' => 1,
+            ]);
+        }
         // if ($request->sub_category_id != null) {
         //     array_push($category, [
         //         'id' => $request->sub_category_id,
@@ -329,7 +334,7 @@ class ProductController extends Controller
         //         'position' => 3,
         //     ]);
         // }
-        // $product->category_ids = json_encode($category);
+        $product->category_ids = json_encode($category);
         // $product->brand_id = $request->brand_id;
         // $product->unit = $request->unit;
         $product->details = $request->description[array_search('en', $request->lang)];
