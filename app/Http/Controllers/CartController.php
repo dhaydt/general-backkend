@@ -21,7 +21,7 @@ class CartController extends Controller
 
     public function updateNavCart()
     {
-        return response()->json(['data' => view('layouts.front-end.partials.cart')->render()]);
+        return response()->json(['data' => view('layouts.backend.partials.cart')->render()]);
     }
 
     //removes from Cart
@@ -53,7 +53,7 @@ class CartController extends Controller
         session()->forget('coupon_discount');
         session()->forget('shipping_method_id');
 
-        return response()->json(['data' => view('layouts.front-end.partials.cart')]);
+        return response()->json(['data' => view('layouts.backend.partials.cart')]);
     }
 
     //updated the quantity for a cart item
@@ -68,6 +68,6 @@ class CartController extends Controller
             return response()->json($response);
         }
 
-        return response()->json(view('layouts.front-end.partials.cart')->render());
+        return response()->json(view('layouts.backend.partials.cart')->render());
     }
 }

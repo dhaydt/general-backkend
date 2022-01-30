@@ -82,8 +82,8 @@
                             class="czi-arrow-left mr-1 ml-n1"></i>
                     </a> --}}
                 </div>
-                <a class="btn btn-primary btn-sm btn-block" href="javascript:">
-                    <i class="czi-card ml-2 font-size-base align-middle"></i>{{('Checkout')}}
+                <a class="btn btn-primary btn-sm btn-block" href="{{ route('admin.order.shop-cart') }}">
+                    <i class="czi-card ml-2 font-size-base align-middle"></i>Checkout
                 </a>
             @else
                 <div class="widget-cart-item">

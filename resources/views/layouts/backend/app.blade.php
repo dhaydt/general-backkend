@@ -275,6 +275,26 @@
         });
     }
 
+    function updateCartQuantity(key) {
+        var quantity = $("#cartQuantity" + key).children("option:selected").val();
+        $.post('{{route('admin.order.updateQuantity')}}', {
+            _token: '{{csrf_token()}}',
+            key: key,
+            quantity: quantity
+        }, function (response) {
+            if (response.status == 0) {
+                toastr.error(response.message, {
+                    CloseButton: true,
+                    ProgressBar: true
+                });
+                $("#cartQuantity" + key).val(response['qty']);
+            } else {
+                updateNavCart();
+                $('#cart-summary').empty().html(response);
+            }
+        });
+    }
+
     function cartQuantityInitialize() {
         $('.btn-number').click(function (e) {
             e.preventDefault();

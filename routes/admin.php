@@ -118,6 +118,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('add', [OrderController::class, 'addToCart'])->name('add');
             Route::post('nav-cart-items', [OrderController::class, 'updateNavCart'])->name('nav-cart');
             Route::post('remove', [OrderController::class, 'removeFromCart'])->name('remove');
+            Route::get('shop-cart', [OrderController::class, 'shop_cart'])->name('shop-cart');
+            Route::post('updateQuantity', [OrderController::class, 'updateQuantity'])->name('updateQuantity');
+            Route::post('checkout-detail', [OrderController::class, 'checkout_detail'])->name('checkout-detail');
+            Route::post('checkout-payment', [OrderController::class, 'checkout_payment'])->name('checkout-payment');
+            Route::get('checkout-complete', [OrderController::class, 'checkout_complete'])->name('checkout-complete');
         });
     });
 });

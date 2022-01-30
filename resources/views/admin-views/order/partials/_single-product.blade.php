@@ -13,6 +13,7 @@
                     <th scope="col" class="sort" data-sort="budget">Product name</th>
                     <th scope="col" class="sort" data-sort="status">Purchase Price</th>
                     <th scope="col" class="sort" data-sort="status">Discount</th>
+                    <th scope="col" class="sort" data-sort="status">Stock</th>
                     <th scope="col">Product</th>
                     <th scope="col" class="sort" data-sort="completion">Action</th>
                     <th scope="col"></th>
@@ -45,6 +46,12 @@
                         <span class="badge badge-dot mr-4">
                             {{-- <i class="bg-warning"></i> --}}
                             <span class="status">{{ $ad['discount'] }}</span>
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-dot mr-4">
+                            {{-- <i class="bg-warning"></i> --}}
+                            <span class="status">{{ $ad['current_stock'] }}</span>
                         </span>
                     </td>
                     <td class="text-center">

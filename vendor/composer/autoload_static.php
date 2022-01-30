@@ -43,6 +43,7 @@ class ComposerStaticInit1d3e31d4e6f69a15f7a211caea0a4aca
         '5db82252215435aaa9946688db025aa8' => __DIR__ . '/../..' . '/app/CPU/image-manager.php',
         '206031e75bc11d78571d648338324113' => __DIR__ . '/../..' . '/app/CPU/product-manager.php',
         'fb6ef1f2159f04ab2987121de0c18af3' => __DIR__ . '/../..' . '/app/CPU/cart-manager.php',
+        'd6756f32511de85898877e2f121cbaa6' => __DIR__ . '/../..' . '/app/CPU/order-manager.php',
     );
 
     public static $prefixLengthsPsr4 = array (

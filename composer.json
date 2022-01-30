@@ -34,7 +34,8 @@
             "app/CPU/helpers.php",
             "app/CPU/image-manager.php",
             "app/CPU/product-manager.php",
-            "app/CPU/cart-manager.php"
+            "app/CPU/cart-manager.php",
+            "app/CPU/order-manager.php"
         ],
         "psr-4": {
             "App\\": "app/",

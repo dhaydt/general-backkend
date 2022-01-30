@@ -309,7 +309,13 @@ class CartManager
         $cart = Cart::where(['id' => $request->key, 'customer_id' => $user->id])->first();
 
         $product = Product::find($cart['product_id']);
-        $count = count(json_decode($product->variation));
+        // dd($product->variation);
+        $variation = $product->variation;
+        if (isset($variation)) {
+            $count = count(json_decode($variation));
+        } else {
+            $count = 0;
+        }
         if ($count) {
             for ($i = 0; $i < $count; ++$i) {
                 if (json_decode($product->variation)[$i]->type == $cart['variant']) {

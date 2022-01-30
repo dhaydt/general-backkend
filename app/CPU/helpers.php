@@ -4,7 +4,10 @@ namespace App\CPU;
 
 use App\Models\Admin;
 use App\Models\BusinessSetting;
+use App\Models\Coupon;
 use App\Models\Customer;
+use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\App;
 
@@ -44,6 +47,37 @@ class Helpers
         }
 
         return $lang;
+    }
+
+    public static function coupon_discount($request)
+    {
+        $discount = 0;
+        $user = Helpers::get_admin($request);
+        $couponLimit = Order::where('customer_id', $user->id)
+            ->where('coupon_code', $request['coupon_code'])->count();
+
+        $coupon = Coupon::where(['code' => $request['coupon_code']])
+            ->where('limit', '>', $couponLimit)
+            ->where('status', '=', 1)
+            ->whereDate('start_date', '<=', Carbon::parse()->toDateString())
+            ->whereDate('expire_date', '>=', Carbon::parse()->toDateString())->first();
+
+        if (isset($coupon)) {
+            $total = 0;
+            foreach (CartManager::get_cart(CartManager::get_cart_group_ids($request)) as $cart) {
+                $product_subtotal = $cart['price'] * $cart['quantity'];
+                $total += $product_subtotal;
+            }
+            if ($total >= $coupon['min_purchase']) {
+                if ($coupon['discount_type'] == 'percentage') {
+                    $discount = (($total / 100) * $coupon['discount']) > $coupon['max_discount'] ? $coupon['max_discount'] : (($total / 100) * $coupon['discount']);
+                } else {
+                    $discount = $coupon['discount'];
+                }
+            }
+        }
+
+        return $discount;
     }
 
     public static function currency_converter($val)
