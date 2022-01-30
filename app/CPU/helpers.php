@@ -2,6 +2,7 @@
 
 namespace App\CPU;
 
+use App\Models\Admin;
 use App\Models\BusinessSetting;
 use App\Models\Customer;
 use Illuminate\Contracts\Session\Session;
@@ -43,6 +44,61 @@ class Helpers
         }
 
         return $lang;
+    }
+
+    public static function get_admin($request = null)
+    {
+        $user = null;
+        if (auth('admin')->check()) {
+            $user = auth('admin')->user(); // for web
+        } elseif ($request != null && $request->user() != null) {
+            $user = $request->user(); //for api
+        } elseif (session()->has('admin_id')) {
+            $user = Admin::find(session('admin_id'));
+        }
+
+        if ($user == null) {
+            $user = 'offline';
+        }
+
+        return $user;
+    }
+
+    public static function get_customer($request = null)
+    {
+        $user = null;
+        if (auth('customer')->check()) {
+            $user = auth('customer')->user(); // for web
+        } elseif ($request != null && $request->user() != null) {
+            $user = $request->user(); //for api
+        } elseif (session()->has('customer_id')) {
+            $user = Customer::find(session('customer_id'));
+        }
+
+        if ($user == null) {
+            $user = 'offline';
+        }
+
+        return $user;
+    }
+
+    public static function tax_calculation($price, $tax, $tax_type)
+    {
+        $amount = ($price / 100) * $tax;
+
+        return $amount;
+    }
+
+    public static function get_product_discount($product, $price)
+    {
+        $discount = 0;
+        if ($product->discount_type == 'percent') {
+            $discount = ($price * $product->discount) / 100;
+        } elseif ($product->discount_type == 'flat') {
+            $discount = $product->discount;
+        }
+
+        return floatval($discount);
     }
 
     public static function get_shipping_methods()

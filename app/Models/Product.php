@@ -27,4 +27,11 @@ class Product extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where(['status' => 1])->orWhere(function ($query) {
+            $query->where(['added_by' => 'admin', 'status' => 1]);
+        });
+    }
 }

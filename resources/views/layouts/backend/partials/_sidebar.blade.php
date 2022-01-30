@@ -96,8 +96,13 @@
             </ul>
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.order.manual') }}">
+                        <i class="fas fa-tasks text-blue"></i>{{ __('Manual Order') }}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.category.view') }}">
-                        <i class="fas fa-cookie-bite text-blue"></i>{{ __('Categories') }}
+                        <i class="fas fa-th-large text-orange"></i>{{ __('Categories') }}
                     </a>
                 </li>
                 <li class="nav-item">

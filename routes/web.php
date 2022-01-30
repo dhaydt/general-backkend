@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\customers\auth\LoginController;
 use App\Http\Controllers\customers\auth\RegisterController;
 use App\Http\Controllers\PaymentController;
@@ -82,4 +83,13 @@ Route::get('/shipping', [WebController::class, 'shipping'])->name('shipping');
 Route::prefix('profile')->name('profile.')->group(function () {
     Route::get('/edit', [UserController::class, 'edit'])->name('edit');
     Route::post('/update', [UserController::class, 'update'])->name('user-update');
+});
+
+// Cart
+Route::prefix('cart')->name('cart.')->group(function () {
+    Route::post('add', [CartController::class, 'addToCart'])->name('add');
+    // Route::post('variant_price', 'CartController@variant_price')->name('variant_price');
+    // Route::post('remove', 'CartController@removeFromCart')->name('remove');
+    // Route::post('nav-cart-items', 'CartController@updateNavCart')->name('nav-cart');
+    // Route::post('updateQuantity', 'CartController@updateQuantity')->name('updateQuantity');
 });

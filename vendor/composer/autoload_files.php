@@ -41,4 +41,5 @@ return array(
     '37efcf4b38f2e77789b09da04b892bff' => $baseDir . '/app/CPU/helpers.php',
     '5db82252215435aaa9946688db025aa8' => $baseDir . '/app/CPU/image-manager.php',
     '206031e75bc11d78571d648338324113' => $baseDir . '/app/CPU/product-manager.php',
+    'fb6ef1f2159f04ab2987121de0c18af3' => $baseDir . '/app/CPU/cart-manager.php',
 );

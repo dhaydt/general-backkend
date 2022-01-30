@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\BussinessSettingsController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\CouponController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\PaymentController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ServiceController;
@@ -110,6 +111,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('update/{id}', [CategoryController::class, 'update'])->name('update');
             Route::post('delete', [CategoryController::class, 'delete'])->name('delete');
             Route::get('status/{id}/{home_status}', [CategoryController::class, 'status'])->name('status');
+        });
+
+        Route::prefix('order')->name('order.')->group(function () {
+            Route::get('manual', [OrderController::class, 'index'])->name('manual');
+            Route::post('add', [OrderController::class, 'addToCart'])->name('add');
+            Route::post('nav-cart-items', [OrderController::class, 'updateNavCart'])->name('nav-cart');
+            Route::post('remove', [OrderController::class, 'removeFromCart'])->name('remove');
         });
     });
 });

@@ -84,8 +84,8 @@ class ProductController extends Controller
         }
 
         $p = new Product();
-        // $p->user_id = 1;
-        // $p->added_by = 'admin';
+        $p->user_id = 1;
+        $p->added_by = 'admin';
         $p->name = $request->name[array_search('en', $request->lang)];
         $p->slug = Str::slug($request->name[array_search('en', $request->lang)], '-').'-'.Str::random(6);
 
