@@ -9,8 +9,8 @@
         }
     }
 </style>
-<div class="nav-item dropdown">
-    <a class="nav-link pr-0 d-flex" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="nav-item navbar-tool dropdown">
+    <a class="nav-link pr-0 d-flex navbar-tool-icon-box" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="media align-items-center">
             <span class="navbar-tool-label cartNumber">
                 @php($cart=\App\CPU\CartManager::get_cart())
@@ -19,12 +19,12 @@
             <input type="hidden" id="cartCount" value="{{ $cart->count() }}">
             <i class="navbar-tool-icon fas fa-shopping-cart text-white"></i>
         </div>
-        <div class="navbar-tool-text d-flex flex-column" href="javascript:"><small>My Cart</small>
-            {{\App\CPU\CartManager::cart_total_applied_discount(\App\CPU\CartManager::get_cart())}}
+        <div class="navbar-tool-text d-flex flex-column" href="javascript:">
+            {{\App\CPU\Helpers::currency_converter(\App\CPU\CartManager::cart_total_applied_discount(\App\CPU\CartManager::get_cart()))}}
         </div>
     </a>
     <!-- Cart dropdown-->
-    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
+    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" id="drop-cart"
          style="width: 20rem;">
         <div class="widget widget-cart px-3 pt-2 pb-3">
             @if($cart->count() > 0)
@@ -38,7 +38,7 @@
                                     aria-hidden="true">&times;</span>
                             </button>
                             <div class="media align-items-center">
-                                <a class="d-block ml-2"
+                                <a class="d-block mr-2"
                                    href="javascript:">
                                     <img width="64"
                                          onerror="this.src='{{asset('assets/front-end/img/image-place-holder.png')}}'"
@@ -53,10 +53,10 @@
                                     @endforeach --}}
                                     <div class="widget-product-meta">
                                         <span
-                                            class="text-muted ml-2">x {{$cartItem['quantity']}}</span>
+                                            class="text-muted mr-2">x {{$cartItem['quantity']}}</span>
                                         <span
-                                            class="text-accent ml-2">
-                                                {{(($cartItem['price']-$cartItem['discount'])*$cartItem['quantity'])}}
+                                            class="text-accent mr-2">
+                                                {{\App\CPU\Helpers::currency_converter(($cartItem['price']-$cartItem['discount'])*$cartItem['quantity'])}}
                                         </span>
                                     </div>
                                 </div>
@@ -67,20 +67,20 @@
                     @endforeach
                 </div>
                 <hr>
-                <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center py-2">
                     <div
-                        class="font-size-sm float-left py-2 ">
+                        class="font-size-sm mr-2 float-left py-2 ">
                         <span class="">{{('Subtotal')}} :</span>
                         <span
                             class="text-accent font-size-base mr-1">
-                             {{($sub_total)}}
+                             {{\App\CPU\Helpers::currency_converter($sub_total)}}
                         </span>
                     </div>
 
-                    <a class="btn btn-outline-secondary btn-sm" href="javascript:">
+                    {{-- <a class="btn btn-outline-secondary btn-sm" href="javascript:">
                         {{('Expand cart')}}<i
                             class="czi-arrow-left mr-1 ml-n1"></i>
-                    </a>
+                    </a> --}}
                 </div>
                 <a class="btn btn-primary btn-sm btn-block" href="javascript:">
                     <i class="czi-card ml-2 font-size-base align-middle"></i>{{('Checkout')}}

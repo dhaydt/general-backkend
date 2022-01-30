@@ -46,7 +46,7 @@ class CartManager
 
     public static function get_cart($group_id = null)
     {
-        $user = Helpers::get_customer();
+        $user = Helpers::get_admin();
         if (session()->has('offline_cart') && $user == 'offline') {
             $cart = session('offline_cart');
             if ($group_id != null) {
@@ -67,7 +67,7 @@ class CartManager
 
     public static function get_cart_group_ids($request = null)
     {
-        $user = Helpers::get_customer($request);
+        $user = Helpers::get_admin($request);
         if ($user == 'offline') {
             if (session()->has('offline_cart') == false) {
                 session()->put('offline_cart', collect([]));
@@ -303,7 +303,7 @@ class CartManager
 
     public static function update_cart_qty($request)
     {
-        $user = Helpers::get_customer($request);
+        $user = Helpers::get_admin($request);
         $status = 1;
         $qty = 0;
         $cart = Cart::where(['id' => $request->key, 'customer_id' => $user->id])->first();

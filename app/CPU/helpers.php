@@ -46,6 +46,15 @@ class Helpers
         return $lang;
     }
 
+    public static function currency_converter($val)
+    {
+        setlocale(LC_MONETARY, 'en_US');
+
+        $price = floatval($val);
+
+        return 'Rp. '.number_format($price);
+    }
+
     public static function get_admin($request = null)
     {
         $user = null;
