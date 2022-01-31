@@ -123,6 +123,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('checkout-detail', [OrderController::class, 'checkout_detail'])->name('checkout-detail');
             Route::post('checkout-payment', [OrderController::class, 'checkout_payment'])->name('checkout-payment');
             Route::get('checkout-complete', [OrderController::class, 'checkout_complete'])->name('checkout-complete');
+            Route::get('list/{status}', [OrderController::class, 'list'])->name('list');
         });
     });
 });

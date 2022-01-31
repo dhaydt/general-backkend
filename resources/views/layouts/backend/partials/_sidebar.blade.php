@@ -121,7 +121,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('icons') }}">
+                    <a class="nav-link" href="{{ route('admin.order.list', ['all']) }}">
                         <i class="fas fa-sort-alpha-down text-blue"></i> {{ __('Order Product') }}
                     </a>
                 </li>

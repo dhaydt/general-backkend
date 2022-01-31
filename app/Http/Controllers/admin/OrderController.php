@@ -7,6 +7,7 @@ use App\CPU\Helpers;
 use App\CPU\OrderManager;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Service;
 use Brian2694\Toastr\Facades\Toastr;
@@ -21,6 +22,85 @@ class OrderController extends Controller
         $service = Service::get();
 
         return view('admin-views.order.manualOrder', compact('product', 'service'));
+    }
+
+    public function list(Request $request, $status)
+    {
+        $orders = Order::get();
+
+        return view('admin-views.order.list', compact('orders'));
+
+        $query_param = [];
+        $search = $request['search'];
+        // dd($request);
+        $start = $request['start-date'];
+        $end = $request['end-date'];
+        if (session()->has('show_inhouse_orders') && session('show_inhouse_orders') == 1) {
+            $query = Order::whereHas('details', function ($query) {
+                $query->whereHas('product', function ($query) {
+                    $query->where('added_by', 'admin');
+                });
+            })->with(['customer']);
+
+            if ($status != 'all') {
+                $orders = $query->where(['order_status' => $status]);
+            } else {
+                $orders = $query;
+            }
+
+            if ($request->has('search')) {
+                $key = explode(' ', $request['search']);
+                $orders = $orders->where(function ($q) use ($key) {
+                    foreach ($key as $value) {
+                        $q->orWhere('id', 'like', "%{$value}%")
+                            ->orWhere('order_status', 'like', "%{$value}%")
+                            ->orWhere('transaction_ref', 'like', "%{$value}%");
+                    }
+                });
+                $query_param = ['search' => $request['search']];
+            }
+
+            if ($request->has('start-date')) {
+                if ($start == $end) {
+                    $orders = $orders->where('created_at', 'like', "%{$start}%");
+                } else {
+                    $orders = $orders->whereBetween('created_at', [$start, $end]);
+                }
+                $query_param = ['start-date' => $start, 'end-date' => $end];
+            }
+        } else {
+            if ($status != 'all') {
+                $orders = Order::with(['customer'])->where(['order_status' => $status]);
+            } else {
+                $orders = Order::with(['customer']);
+            }
+
+            if ($request->has('search')) {
+                $key = explode(' ', $request['search']);
+                $orders = $orders->where(function ($q) use ($key) {
+                    foreach ($key as $value) {
+                        $q->orWhere('id', 'like', "%{$value}%")
+                            ->orWhere('order_status', 'like', "%{$value}%")
+                            ->orWhere('transaction_ref', 'like', "%{$value}%");
+                    }
+                });
+                $query_param = ['search' => $request['search']];
+                // dd($query_param);
+            }
+
+            if ($request->has('start-date')) {
+                if ($start == $end) {
+                    $orders = $orders->where('created_at', 'like', "%{$start}%");
+                } else {
+                    $orders = $orders->whereBetween('created_at', [$start, $end]);
+                }
+                $query_param = ['start-date' => $start, 'end-date' => $end];
+            }
+        }
+
+        $orders = $orders->latest()->paginate(Helpers::pagination_limit())->appends($query_param);
+
+        return view('admin-views.order.list', compact('orders', 'search', 'start', 'end'));
     }
 
     public function addToCart(Request $request)
