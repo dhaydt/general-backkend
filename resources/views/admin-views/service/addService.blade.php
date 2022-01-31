@@ -212,6 +212,15 @@
                                         </div>
 
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="name">Upload thumbnail</label><small
+                                                style="color: red">* ( ratio 1:1 )</small>
+                                        </div>
+                                        <div style="max-width:200px;">
+                                            <div class="row" id="thumbnail"></div>
+                                        </div>
+                                    </div>
                                     {{-- <div class="col-md-6">
                                         <label
                                             class="control-label">{{'Purchase price'}}</label>

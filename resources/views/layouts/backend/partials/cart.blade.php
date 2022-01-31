@@ -20,6 +20,7 @@
             <i class="navbar-tool-icon fas fa-shopping-cart text-white"></i>
         </div>
         <div class="navbar-tool-text d-flex flex-column" href="javascript:">
+            {{-- {{ dd($cart) }} --}}
             {{\App\CPU\Helpers::currency_converter(\App\CPU\CartManager::cart_total_applied_discount(\App\CPU\CartManager::get_cart()))}}
         </div>
     </a>
@@ -32,18 +33,25 @@
                     @php($sub_total=0)
                     @php($total_tax=0)
                     @foreach($cart as  $cartItem)
-                        <div class="widget-cart-item pb-2">
-                            <button class="close text-danger " type="button" onclick="removeFromCart({{ $cartItem['id'] }})"
-                                    aria-label="Remove"><span
-                                    aria-hidden="true">&times;</span>
-                            </button>
-                            <div class="media align-items-center">
-                                <a class="d-block mr-2"
-                                   href="javascript:">
-                                    <img width="64"
-                                         onerror="this.src='{{asset('assets/front-end/img/image-place-holder.png')}}'"
-                                         src="{{\App\CPU\ProductManager::product_image_path('thumbnail')}}/{{$cartItem['thumbnail']}}"
-                                         alt="Product"/>
+                    <div class="widget-cart-item pb-2">
+                        <button class="close text-danger " type="button" onclick="removeFromCart({{ $cartItem['id'] }})"
+                        aria-label="Remove"><span
+                        aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="media align-items-center">
+                        <a class="d-block mr-2"
+                        href="javascript:">
+                        @if ($cartItem['type'] == 'service')
+                        <img width="64"
+                         onerror="this.src='{{asset('assets/front-end/img/image-place-holder.png')}}'"
+                         src="{{\App\CPU\ProductManager::service_image_path('thumbnail')}}/{{$cartItem['thumbnail']}}"
+                         alt="Product"/>
+                        @else
+                        <img width="64"
+                             onerror="this.src='{{asset('assets/front-end/img/image-place-holder.png')}}'"
+                             src="{{\App\CPU\ProductManager::product_image_path('thumbnail')}}/{{$cartItem['thumbnail']}}"
+                             alt="Product"/>
+                        @endif
                                 </a>
                                 <div class="media-body">
                                     <h6 class="widget-product-title">

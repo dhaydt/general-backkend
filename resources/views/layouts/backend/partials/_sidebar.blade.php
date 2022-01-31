@@ -96,11 +96,6 @@
             </ul>
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.order.manual') }}">
-                        <i class="fas fa-tasks text-blue"></i>{{ __('Manual Order') }}
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.category.view') }}">
                         <i class="fas fa-th-large text-orange"></i>{{ __('Categories') }}
                     </a>
@@ -117,17 +112,32 @@
                 </li>
             </ul>
             <!-- Order Section -->
-            <h6 class="navbar-heading text-muted">Order Section</h6>
+            <h6 class="navbar-heading text-muted">Incoming Order</h6>
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.order.list', ['all']) }}">
-                        <i class="fas fa-sort-alpha-down text-blue"></i> {{ __('Order Product') }}
+                        <i class="fas fa-sort-alpha-down text-blue"></i> {{ __('Product Ordered') }}
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('map') }}">
-                        <i class="fas fa-sort-alpha-up-alt text-orange"></i> {{ __('Order Service') }}
+                    <a class="nav-link" href="{{ route('admin.order.listOrder', ['all']) }}">
+                        <i class="fas fa-sort-alpha-up-alt text-orange"></i> {{ __('Service Ordered') }}
+                    </a>
+                </li>
+            </ul>
+
+            <h6 class="navbar-heading text-muted">Manual Order</h6>
+            <!-- Navigation -->
+            <ul class="navbar-nav mb-md-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.order.manual') }}">
+                        <i class="fas fa-tasks text-blue"></i> {{ __('Order Product') }}
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('admin.order.manualService') }}">
+                        <i class="fas fa-tasks text-orange"></i> {{ __('Order Service') }}
                     </a>
                 </li>
             </ul>

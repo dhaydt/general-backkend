@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderTransaction;
 use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -254,7 +255,7 @@ class OrderManager
 
         $cart_group_id = $data['cart_group_id'];
         $seller_data = Cart::where(['cart_group_id' => $cart_group_id])->first();
-
+        // dd($data);
         $or = [
             'id' => $order_id,
             'delivery_date' => $delivery_date,
@@ -267,6 +268,7 @@ class OrderManager
             'order_status' => $data['order_status'],
             'payment_method' => $data['payment_method'],
             // 'transaction_ref' => $data['transaction_ref'],
+            'type' => $data['type'],
             'order_group_id' => $data['order_group_id'],
             'discount_amount' => $discount,
             'discount_type' => $discount == 0 ? null : 'coupon_discount',
@@ -283,45 +285,69 @@ class OrderManager
         $order_id = DB::table('orders')->insertGetId($or);
 
         foreach (CartManager::get_cart($data['cart_group_id']) as $c) {
-            $product = Product::where(['id' => $c['product_id']])->first();
-            $or_d = [
-                'order_id' => $order_id,
-                'product_id' => $c['product_id'],
-                // 'seller_id' => $c['seller_id'],
-                'product_details' => $product,
-                'qty' => $c['quantity'],
-                'price' => $c['price'],
-                'tax' => $c['tax'] * $c['quantity'],
-                'discount' => $c['discount'] * $c['quantity'],
-                'discount_type' => 'discount_on_product',
-                // 'variant' => $c['variant'],
-                // 'variation' => $c['variations'],
-                'delivery_status' => 'delivered',
-                'shipping_method_id' => null,
-                'payment_status' => 'paid',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+            if ($c['type'] == 'service') {
+                $product = Service::where(['id' => $c['product_id']])->first();
+                $or_d = [
+                    'order_id' => $order_id,
+                    'product_id' => $c['product_id'],
+                    // 'seller_id' => $c['seller_id'],
+                    'product_details' => $product,
+                    'qty' => $c['quantity'],
+                    'price' => $c['price'],
+                    'tax' => $c['tax'] * $c['quantity'],
+                    'discount' => $c['discount'] * $c['quantity'],
+                    'discount_type' => 'discount_on_product',
+                    // 'variant' => $c['variant'],
+                    // 'variation' => $c['variations'],
+                    'delivery_status' => 'delivered',
+                    'shipping_method_id' => null,
+                    'payment_status' => 'paid',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
 
-            // if ($c['variant'] != null) {
-            //     $type = $c['variant'];
-            //     $var_store = [];
-            //     foreach (json_decode($product['variation'], true) as $var) {
-            //         if ($type == $var['type']) {
-            //             $var['qty'] -= $c['quantity'];
-            //         }
-            //         array_push($var_store, $var);
-            //     }
-            //     Product::where(['id' => $product['id']])->update([
-            //         'variation' => json_encode($var_store),
-            //     ]);
-            // }
+                DB::table('order_details')->insert($or_d);
+            } else {
+                $product = Product::where(['id' => $c['product_id']])->first();
+                $or_d = [
+                    'order_id' => $order_id,
+                    'product_id' => $c['product_id'],
+                    // 'seller_id' => $c['seller_id'],
+                    'product_details' => $product,
+                    'qty' => $c['quantity'],
+                    'price' => $c['price'],
+                    'tax' => $c['tax'] * $c['quantity'],
+                    'discount' => $c['discount'] * $c['quantity'],
+                    'discount_type' => 'discount_on_product',
+                    // 'variant' => $c['variant'],
+                    // 'variation' => $c['variations'],
+                    'delivery_status' => 'delivered',
+                    'shipping_method_id' => null,
+                    'payment_status' => 'paid',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
 
-            Product::where(['id' => $product['id']])->update([
-                'current_stock' => $product['current_stock'] - $c['quantity'],
-            ]);
+                // if ($c['variant'] != null) {
+                //     $type = $c['variant'];
+                //     $var_store = [];
+                //     foreach (json_decode($product['variation'], true) as $var) {
+                //         if ($type == $var['type']) {
+                //             $var['qty'] -= $c['quantity'];
+                //         }
+                //         array_push($var_store, $var);
+                //     }
+                //     Product::where(['id' => $product['id']])->update([
+                //         'variation' => json_encode($var_store),
+                //     ]);
+                // }
 
-            DB::table('order_details')->insert($or_d);
+                Product::where(['id' => $product['id']])->update([
+                    'current_stock' => $product['current_stock'] - $c['quantity'],
+                ]);
+
+                DB::table('order_details')->insert($or_d);
+            }
         }
 
         if ($or['payment_method'] != 'cash_on_delivery') {

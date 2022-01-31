@@ -39,7 +39,7 @@
                     <td class="text-center">
                         <span class="badge badge-dot mr-4">
                             {{-- <i class="bg-warning"></i> --}}
-                            <span class="status">{{ $ad['unit_price'] }}</span>
+                            <span class="status">{{ $ad['price'] }}</span>
                         </span>
                     </td>
                     <td class="text-center">
@@ -60,7 +60,7 @@
                             <a href="javascript:" class="avatar avatar-sm rounded-circle"
                                 data-toggle="tooltip" data-original-title="Ryan Tompson">
                                 <img alt="Image placeholder"
-                                    src="{{ asset('storage/product/'.$photo) }}">
+                                    src="{{ asset('storage/service/'.$photo) }}">
                             </a>
                             @endforeach
                         </div>
@@ -140,7 +140,7 @@
             });
             $.post({
                 url: '{{route('admin.order.add')}}',
-                data: {'id' : val, 'quantity': 1},
+                data: {'id' : val, 'quantity': 1, 'type': 'service'},
                 beforeSend: function () {
                     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
                         $('#loading').addClass('loading-mobile');

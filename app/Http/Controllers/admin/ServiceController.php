@@ -35,6 +35,7 @@ class ServiceController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'images' => 'required',
+            'image' => 'required',
             'price' => 'required|numeric|min:1',
         ], [
             'images.required' => 'Product images is required!',
@@ -57,7 +58,7 @@ class ServiceController extends Controller
             }
             $p->images = json_encode($product_images);
         }
-        // $p->thumbnail = ImageManager::upload('service/thumbnail/', 'png', $request->image);
+        $p->thumbnail = ImageManager::upload('service/thumbnail/', 'png', $request->image);
 
         //combinations end
         // $p->variation = json_encode($variations);

@@ -24,9 +24,18 @@ class OrderController extends Controller
         return view('admin-views.order.manualOrder', compact('product', 'service'));
     }
 
+    public function listOrder(Request $request, $status)
+    {
+        $orders = Order::where('type', 'service')->get();
+        session()->put('title', 'Service Ordered');
+
+        return view('admin-views.order.service.list', compact('orders'));
+    }
+
     public function list(Request $request, $status)
     {
-        $orders = Order::get();
+        $orders = Order::where('type', 'product')->get();
+        session()->put('title', 'Product Ordered');
 
         return view('admin-views.order.list', compact('orders'));
 
@@ -105,7 +114,12 @@ class OrderController extends Controller
 
     public function addToCart(Request $request)
     {
-        // dd($request);
+        // dd($request->type);
+        if ($request->type == 'service') {
+            $cart = CartManager::add_service_cart($request);
+
+            return response()->json($cart);
+        }
         $cart = CartManager::add_to_cart($request);
         session()->forget('coupon_code');
         session()->forget('coupon_discount');
@@ -210,32 +224,11 @@ class OrderController extends Controller
         return redirect('/');
     }
 
-    public function checkout_payment()
-    {
-        $cart_group_ids = CartManager::get_cart_group_ids();
-        // if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
-        //     Toastr::info(translate('select_shipping_method_first'));
-
-        //     return redirect('shop-cart');
-        // }
-
-        if (session()->has('address_id') && count($cart_group_ids) > 0) {
-            $data = [
-                'name' => 'Pembayaran',
-            ];
-            // session()->put('category', $data);
-
-            return view('web-views.checkout-payment');
-        }
-
-        Toastr::error('incomplete_info');
-
-        return back();
-    }
-
     public function checkout_complete(Request $request)
     {
-        // dd($request);
+        $cart = session()->get('cart_group_id');
+        $type = Cart::where('cart_group_id', $cart)->first();
+        // dd($type);
         $unique_id = OrderManager::gen_unique_id();
         $order_ids = [];
         foreach (CartManager::get_cart_group_ids() as $group_id) {
@@ -243,10 +236,11 @@ class OrderController extends Controller
                 'payment_method' => 'cash',
                 'order_status' => 'delivered',
                 'payment_status' => 'paid',
-                // 'transaction_ref' => '',
+                'type' => $type->type,
                 'order_group_id' => $unique_id,
                 'cart_group_id' => $group_id,
             ];
+            // dd($request);
             $order_id = OrderManager::generate_order($data);
             session()->put('orderID', $order_id);
             array_push($order_ids, $order_id);
@@ -262,5 +256,14 @@ class OrderController extends Controller
         session()->put('category', $data);
 
         return view('admin-views.order.checkout-complete');
+    }
+
+    public function indexService()
+    {
+        $product = Service::active()->get();
+        session()->put('title', 'Manual Order Service');
+        $service = Service::get();
+
+        return view('admin-views.order.service.manualOrder', compact('product', 'service'));
     }
 }

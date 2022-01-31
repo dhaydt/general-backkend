@@ -5,6 +5,7 @@ namespace App\CPU;
 use App\Models\Cart;
 use App\Models\CartShipping;
 use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Support\Str;
 
 class CartManager
@@ -215,7 +216,7 @@ class CartManager
             } else {
                 return [
                     'status' => 0,
-                    'message' => 'already_added!',
+                    'message' => 'already added!',
                 ];
             }
         }
@@ -228,7 +229,7 @@ class CartManager
         if ($product['current_stock'] < $request['quantity']) {
             return [
                 'status' => 0,
-                'message' => 'out_of_stock!',
+                'message' => 'out of stock!',
             ];
         }
 
@@ -341,6 +342,127 @@ class CartManager
             'status' => $status,
             'qty' => $qty,
             'message' => $status == 1 ? 'successfully_updated!' : 'sorry_stock_is_limited',
+        ];
+    }
+
+    public static function add_service_cart($request, $from_api = false)
+    {
+        $str = '';
+        $price = 0;
+
+        $user = Helpers::get_admin($request);
+        $product = Service::find($request->id);
+
+        if ($user == 'offline') {
+            if (session()->has('offline_cart')) {
+                $cart = session('offline_cart');
+                $check = $cart->where('product_id', $request->id)->first();
+                if (isset($check) == false) {
+                    $cart = collect();
+                    $cart['id'] = time();
+                } else {
+                    return [
+                        'status' => 0,
+                        'message' => 'already_added!',
+                    ];
+                }
+            } else {
+                $cart = collect();
+                session()->put('offline_cart', $cart);
+            }
+        } else {
+            $cart = Cart::where(['product_id' => $request->id, 'customer_id' => $user->id, 'type' => 'service'])->first();
+            if (isset($cart) == false) {
+                $cart = new Cart();
+            } else {
+                return [
+                    'status' => 0,
+                    'message' => 'already added!',
+                ];
+            }
+        }
+
+        // $cart['color'] = $request->has('color') ? $request['color'] : null;
+        $cart['product_id'] = $product->id;
+        // $cart['choices'] = json_encode($choices);
+
+        //chek if out of stock
+        // if ($product['current_stock'] < $request['quantity']) {
+        //     return [
+        //         'status' => 0,
+        //         'message' => 'out_of_stock!',
+        //     ];
+        // }
+
+        // $cart['variations'] = json_encode($variations);
+        // $cart['variant'] = $str;
+
+        //Check the string and decreases quantity for the stock
+        // if ($str != null) {
+        //     $count = count(json_decode($product->variation));
+        //     for ($i = 0; $i < $count; ++$i) {
+        //         if (json_decode($product->variation)[$i]->type == $str) {
+        //             $price = json_decode($product->variation)[$i]->price;
+        //             if (json_decode($product->variation)[$i]->qty < $request['quantity']) {
+        //                 return [
+        //                     'status' => 0,
+        //                     'message' => 'out_of_stock!',
+        //                 ];
+        //             }
+        //         }
+        //     }
+        // } else {
+        $price = $product->price;
+        // }
+
+        // $tax = Helpers::tax_calculation($price, $product['tax'], 'percent');
+        $tax = Helpers::tax_calculation($price, 0, 'percent');
+
+        //generate group id
+        // if ($user == 'offline') {
+        //     $check = session('offline_cart');
+        //     $cart_check = $check->where('seller_id', $product->user_id)->where('seller_is', $product->added_by)->first();
+        // } else {
+        $cart_check = Cart::where([
+                'customer_id' => $user->id,
+                'type' => 'service',
+                'seller_is' => 'admin', ])->first();
+        // }
+
+        if (isset($cart_check)) {
+            $cart['cart_group_id'] = $cart_check['cart_group_id'];
+        } else {
+            $cart['cart_group_id'] = ($user == 'offline' ? 'offline' : $user->id).'-'.Str::random(5).'-'.time();
+        }
+        //generate group id end
+
+        $cart['customer_id'] = $user->id ?? 0;
+        // $cart['quantity'] = $request['quantity'];
+        $cart['type'] = 'service';
+        $cart['quantity'] = 1;
+        /*$data['shipping_method_id'] = $shipping_id;*/
+        $cart['price'] = $price;
+        $cart['tax'] = $tax;
+        // $cart['slug'] = $product->slug;
+        $cart['name'] = $product->name;
+        $cart['discount'] = Helpers::get_product_discount($product, $price);
+        /*$data['shipping_cost'] = $shipping_cost;*/
+        $cart['thumbnail'] = $product->thumbnail;
+        $cart['seller_id'] = 1;
+        $cart['seller_is'] = 'admin';
+        $cart['shop_info'] = Helpers::get_business_settings('company_name');
+
+        if ($user == 'offline') {
+            $offline_cart = session('offline_cart');
+            $offline_cart->push($cart);
+            session()->put('offline_cart', $offline_cart);
+        } else {
+            $cart->save();
+        }
+
+        return [
+            'status' => 1,
+            'message' => 'successfully_added!',
         ];
     }
 }

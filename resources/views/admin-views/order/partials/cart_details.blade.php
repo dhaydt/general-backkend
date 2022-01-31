@@ -10,10 +10,17 @@
                             <div
                                 class="media-header d-flex justify-content-center align-items-center {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}}">
                                 <a href="javascript:">
+                                    @if ($cartItem['type'] == 'service')
+                                    <img style="height: 82px;"
+                                         onerror="this.src='{{asset('assets/front-end/img/image-place-holder.png')}}'"
+                                         src="{{\App\CPU\ProductManager::service_image_path('thumbnail')}}/{{$cartItem['thumbnail']}}"
+                                         alt="Product">
+                                    @else
                                     <img style="height: 82px;"
                                          onerror="this.src='{{asset('assets/front-end/img/image-place-holder.png')}}'"
                                          src="{{\App\CPU\ProductManager::product_image_path('thumbnail')}}/{{$cartItem['thumbnail']}}"
                                          alt="Product">
+                                    @endif
                                 </a>
                             </div>
 
@@ -74,7 +81,7 @@
     </div>
     <div class="row pt-2 mobile-cart-detail">
         <div class="col-6 text-start">
-            <a href="{{route('admin.order.manual')}}" class="btn btn-primary">
+            <a href="{{route('admin.dashboard')}}" class="btn btn-primary">
                 <i class="fa fa-backward px-1"></i> Back to Product
             </a>
         </div>

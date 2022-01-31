@@ -147,6 +147,18 @@ class ProductManager
         return $path;
     }
 
+    public static function service_image_path($image_type)
+    {
+        $path = '';
+        if ($image_type == 'thumbnail') {
+            $path = asset('storage/service/thumbnail');
+        } elseif ($image_type == 'service') {
+            $path = asset('storage/service');
+        }
+
+        return $path;
+    }
+
     // public static function get_product_review($id)
     // {
     //     $reviews = Review::where('product_id', $id)

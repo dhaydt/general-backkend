@@ -1,7 +1,7 @@
 @extends('layouts.backend.app')
 @section('title', 'Order')
 @section('content')
-@include('admin-views.order.partials._headerList')
+@include('admin-views.order.service.partials._headerList')
 <div class="content container-fluid">
     <!-- Content Row -->
     <div class="row gx-2 gx-lg-3 mt--8">
@@ -14,7 +14,7 @@
             <!-- Heading-->
             <div class="section-header pt-2">
               <div class="feature_header">
-                <span class="for-feature-title">Product List</span>
+                <span class="for-feature-title">Service List</span>
               </div>
             </div>
 

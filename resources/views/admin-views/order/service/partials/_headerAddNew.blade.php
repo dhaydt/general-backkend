@@ -12,14 +12,13 @@
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-2">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item active">Order Manual Product</li>
-                            {{-- <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}</li> --}}
+                            <li class="breadcrumb-item" aria-current="page"><a href="{{ route('admin.listProduct') }}">Product</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Order Service</li>
                         </ol>
                     </nav>
                 </div>
-                {{-- <div class="col-lg-6 col-5 text-right">
-                    <a href="{{ route('admin.addProduct') }}" class="btn btn-sm btn-neutral">Add Product</a>
-                </div> --}}
+                <div class="col-lg-6 col-5 text-right">
+                </div>
             </div>
         </div>
     </div>

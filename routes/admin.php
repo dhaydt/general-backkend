@@ -124,6 +124,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('checkout-payment', [OrderController::class, 'checkout_payment'])->name('checkout-payment');
             Route::get('checkout-complete', [OrderController::class, 'checkout_complete'])->name('checkout-complete');
             Route::get('list/{status}', [OrderController::class, 'list'])->name('list');
+            Route::get('listOrder/{status}', [OrderController::class, 'listOrder'])->name('listOrder');
+
+            // Service
+            Route::get('manualService', [OrderController::class, 'indexService'])->name('manualService');
         });
     });
 });
